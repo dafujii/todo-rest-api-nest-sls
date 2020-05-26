@@ -1,4 +1,4 @@
-service: todo-rest-api-nest-serverlessframework
+service: todo-rest-api-nest-sls
 
 plugins:
   - serverless-layers
