@@ -19,6 +19,12 @@ provider:
   versionFunctions: false
   deploymentBucket:
     name: dafujii-serverless-deploymentbucket
+  vpc:
+    securityGroupIds:
+      - sg-0f3a6eacc4e1351b5
+    subnetIds:
+      - subnet-070c26f9888b68668
+      - subnet-0fd6a08fcce7cd6d2
 
 package:
   individually: true
