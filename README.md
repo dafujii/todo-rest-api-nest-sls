@@ -138,7 +138,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### 現状をpushするための準備
 
-2020/05/27 19:30-
+2020/05/27 19:30-21:00
 
 1. `README.md` 編集
 2. draw.ioでアーキテクチャ構成図（理想）作成
@@ -152,6 +152,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    7. デバッグ実行成功ス
    8. 検証成功
 4. コミットできる目途がついたのでコミット(auth)
+5. masterにマージしてpush
+   1. `git remote add origin git@github.com:dafujii/todo-rest-api-nest-sls.git`
+   2. `git push -u origin master`
 
 ## 課題
 
@@ -201,12 +204,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 - Nest.js + Serverless Framework + TypeScript で API Gateway + Lambda 環境を構築してみる
   - https://note.com/dafujii/n/n83e76bc7e008
-- https://docs.nestjs.com/techniques/database
-- https://qiita.com/elipmoc101/items/9b1e6b3efa62f3c2a166
-- https://docs.nestjs.com/techniques/authentication
-- https://qiita.com/takasp/items/60b201607cec57d55596
-- https://note.com/dafujii/n/naf05740a253b
-
+- Nest.js公式ドキュメント
+  - https://docs.nestjs.com/techniques/database
+  - https://docs.nestjs.com/techniques/authentication
+- NestJSのススメ ～Expressを超えてゆけ～
+  - https://qiita.com/elipmoc101/items/9b1e6b3efa62f3c2a166
+- Serverless Framework から AWS Systems Manager パラメータストアを利用する
+  - https://qiita.com/takasp/items/60b201607cec57d55596
+- serverless-offline を導入して  Serverless Framework + TypeScript で作った Lambda 関数を VS Code でステップ実行する
+  - https://note.com/dafujii/n/naf05740a253b
 
 ## How to use
 
