@@ -176,6 +176,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    1. DTO削除
 4. `User` を `IUser` に置き換えてコミット
 
+### テストに慣れるためにログイン時のテストを書いてみる
+
+2020/06/03 14:40 - 
+
+1. `auth.service.spec.ts`
+   1. `validateUser` のテスト作成
+   2. コミット
+      1. ちょいちょいコミット漏れ出てくる…🤔
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -210,6 +219,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - VSCodeのTest UI Explorerすごい。watchもしてくれる
 - IntelliSenseによる自動importでは`./src/`から始まるが、そうするとインポートできない模様
 - Nest.jsはscriptsにformatやlintも用意してあってすごくありがたい
+- `@Req` は `@Request` のエイリアス、 `@Res` は `@Response` のエイリアス
+- Jestはカバレッジとれる
+- プロジェクト生成時にテストも生成されていると、テストの書き方が推測できるのでありがたい
 
 ## わからん
 

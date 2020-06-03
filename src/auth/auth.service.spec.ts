@@ -23,4 +23,17 @@ describe('AuthService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('alpha/123456789 でユーザの検証に成功すること', async () => {
+    const result = await service.validateUser('alpha', '123456789');
+    expect(result).toEqual({
+      userId: 1,
+      username: 'alpha',
+    });
+  });
+
+  it('bravo/123456789 でユーザの検証に失敗すること', async () => {
+    const result = await service.validateUser('bravo', '123456789');
+    expect(result).toBeNull();
+  });
 });
