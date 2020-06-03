@@ -7,18 +7,22 @@
   - @nestjs/passport
 - TypeORM
 - Serverless Framework
+- Jest
 - API Gateway
 - Lambda
 - RDS Proxy
 - RDS for MySQL
 
-![aws_architecture.png](aws_architecture.png)
+![./docs/aws_architecture.png](./docs/aws_architecture.png)
+
+![./docs/ER.png](./docs/ER.png)
 
 ## 機能
 
 - [ ] ToDoアイテムの要素
   - [ ] タイトル
   - [ ] 内容
+  - [ ] ステータス
 - [ ] 検索
 - [ ] 登録
 - [ ] 更新
@@ -189,17 +193,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    2. `profile` のテスト作成
    3. コミット
 
+### ER図つくる
+
+2020/06/03 19:50 - 20:10
+
+1. draw.ioで製図
+2. ドキュメント整備
+3. コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
   - [ ] SQLiteでもいいか！
 - [ ] デプロイ時のマイグレーションどうする？
-- [x] secretの管理方法
-  - [x] https://qiita.com/takasp/items/60b201607cec57d55596
 - [ ] 永続化
 - [ ] デプロイ方法は？
   - [ ] CodeDeploy
-  - [ ] `auth/constants.ts` 差し替え
   - [ ] TypeORMのマイグレーションコマンド？
   - [ ] `deploy:dev`
 - [ ] パスワードハッシュ化
@@ -228,6 +237,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - プロジェクト生成時にテストも生成されていると、テストの書き方が推測できるのでありがたい
 - コントローラのテスト書くときはGuardを通ってきた体で書く
   - なのでコントローラで認証/認可失敗時の単体テストは書けない？
+- ER図の書き方大分忘れてる
+  - 1対多の0以上/1以上とか
 
 ## わからん
 
