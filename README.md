@@ -166,6 +166,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    1. `app.controller.spec.ts` のテストが通るように修正、コミット
    1. `auth.service.spec.ts` のテストが通るように修正、コミット
 
+### Nest.jsではDTOを使うらしいのでログイン周りの処理に持ち込んでみる
+
+2020/06/03 14:10 - 14:30
+
+1. `login-user.dto.ts`
+2. `nest g interface users/interface/user`
+3. `Gurd` で処理された結果が `@Request` に入って来てるので、DTOに置き換えられなさそう？
+   1. DTO削除
+4. `User` を `IUser` に置き換えてコミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
