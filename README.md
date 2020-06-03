@@ -158,12 +158,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### 自動生成されたテストを通るようにする
 
-2020/06/03 13:20 - 
+2020/06/03 13:20 - 13:50
 
 `auth.service.spec.ts` と `app.controller.spec.ts` でテスト失敗中
 
 1. `Test.createTestingModule` で色々読み込ませる必要がある説
    1. `app.controller.spec.ts` のテストが通るように修正、コミット
+   1. `auth.service.spec.ts` のテストが通るように修正、コミット
 
 ## 課題
 
