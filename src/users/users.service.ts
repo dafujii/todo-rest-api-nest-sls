@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { async } from 'rxjs/internal/scheduler/async';
 
 export type User = {
   userId: number;

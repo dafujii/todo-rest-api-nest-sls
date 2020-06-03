@@ -156,6 +156,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    1. `git remote add origin git@github.com:dafujii/todo-rest-api-nest-sls.git`
    2. `git push -u origin master`
 
+### 自動生成されたテストを通るようにする
+
+2020/06/03 13:20 - 
+
+`auth.service.spec.ts` と `app.controller.spec.ts` でテスト失敗中
+
+1. `Test.createTestingModule` で色々読み込ませる必要がある説
+   1. `app.controller.spec.ts` のテストが通るように修正、コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -187,6 +196,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - ローカルでもSSMから値を取って来てくれる
   - ただし自動 `dist/` に出力したものを動かすため主導でビルドする必要がある
   - ブレイクポイント打てるのはcontrollerのみ？
+- VSCodeのTest UI Explorerすごい。watchもしてくれる
+- IntelliSenseによる自動importでは`./src/`から始まるが、そうするとインポートできない模様
+- Nest.jsはscriptsにformatやlintも用意してあってすごくありがたい
 
 ## わからん
 
