@@ -27,5 +27,28 @@ describe('AppController', () => {
     it('should return "Hello World!"', () => {
       expect(appController.getHello()).toBe('Hello World!');
     });
+
+    it('3:charlie でログインに成功し、トークンが返却されること', async () => {
+      const token = await appController.login({
+        user: {
+          userId: 3,
+          username: 'charlie',
+        },
+      });
+
+      expect(token.access_token).toBeDefined();
+    });
+  });
+
+  it('リクエストしたUser情報が閲覧できること', async () => {
+    const result = await appController.getProfile({
+      user: {
+        foo: 'bar',
+      },
+    });
+
+    expect(result).toEqual({
+      foo: 'bar',
+    });
   });
 });

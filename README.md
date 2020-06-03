@@ -178,12 +178,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### テストに慣れるためにログイン時のテストを書いてみる
 
-2020/06/03 14:40 - 
+2020/06/03 14:40 - 15:30
 
 1. `auth.service.spec.ts`
    1. `validateUser` のテスト作成
    2. コミット
       1. ちょいちょいコミット漏れ出てくる…🤔
+2. `app.controller.spec.ts`
+   1. ログイン時のテスト作成
+   2. `profile` のテスト作成
+   3. コミット
 
 ## 課題
 
@@ -222,6 +226,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - `@Req` は `@Request` のエイリアス、 `@Res` は `@Response` のエイリアス
 - Jestはカバレッジとれる
 - プロジェクト生成時にテストも生成されていると、テストの書き方が推測できるのでありがたい
+- コントローラのテスト書くときはGuardを通ってきた体で書く
+  - なのでコントローラで認証/認可失敗時の単体テストは書けない？
 
 ## わからん
 
