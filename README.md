@@ -201,6 +201,27 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 2. ドキュメント整備
 3. コミット
 
+### TypeORMとUsersテーブルと
+
+2020/06/03 20:15 - 21:30
+
+1. `./entities/user.entity.ts`
+2. `IUser`から`User`へ置き換え
+3. 😇
+4. `@Column({type: 'enum'}` はSQLite対応してなかった
+5. TODO: テスト全部失敗するのでなんとかする
+
+### テスト用DBモック
+
+2020/06/04 20:20 - 20:50
+
+1. `getRepositoryToken()` を使えばいいらしい
+   1. `usevalue` でメソッド定義できる！
+2. 各テスト書き換え
+   1. 昨日作った`user.entity.ts`の中身が`User`と`ToDo`悪魔合体してた🤔
+3. テスト成功！
+4. コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -212,6 +233,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - [ ] TypeORMのマイグレーションコマンド？
   - [ ] `deploy:dev`
 - [ ] パスワードハッシュ化
+- [ ] テスト
+  - [x] DBモック
 
 ## わかったこと
 
@@ -239,6 +262,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - なのでコントローラで認証/認可失敗時の単体テストは書けない？
 - ER図の書き方大分忘れてる
   - 1対多の0以上/1以上とか
+- Nest.jsにエンティティの生成コマンドはない
+- エンティティに `type:enum` 使える
+  - ただしSQLiteは対応していない
+- `synchronize:true` でマイグレーションを自動でしてくれる
+- `getRepositoryToken()` すごい
+  - 任意の文字列を返すように定義したメソッドをDIできる
 
 ## わからん
 
@@ -247,10 +276,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - nest.jsわからん
   - passportわからん
 - TypeORMわからん
+  - DBモックのテスト
 - nest.js + Serverless Framework
   - `serverless-offline`
     - 毎回手動でビルドコマンド叩く必要がある？
     - 初回実行時はHTTP 502返す？
+- ほぼ初めて触るフレームワークやORMでTDDやる方法
 
 ## 参考記事
 
@@ -265,6 +296,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - https://qiita.com/takasp/items/60b201607cec57d55596
 - serverless-offline を導入して  Serverless Framework + TypeScript で作った Lambda 関数を VS Code でステップ実行する
   - https://note.com/dafujii/n/naf05740a253b
+- TypeORM
+  - https://typeorm.io/
+- NestJS の TypeORM モジュールを利用したクリーンなデータストアアクセスの実装
+  - https://qiita.com/potato4d/items/64a1f518abdfe281ce01
 
 ## How to use
 

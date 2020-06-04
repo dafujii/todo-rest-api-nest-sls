@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { IUser } from './interface/user.interface';
+import { User } from '../entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
   private readonly users: IUser[];
 
-  constructor() {
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {
     this.users = [
       {
         userId: 1,
@@ -25,8 +31,18 @@ export class UsersService {
     ];
   }
 
-  // TODO: TypeORM
-  async findOne(username: string): Promise<IUser | undefined> {
-    return this.users.find(user => user.username === username);
+  async findOne(username: string): Promise<User | undefined> {
+    const user = await this.userRepository.find({
+      where: {
+        username: username,
+      },
+      take: 1,
+    });
+
+    if (user.length === 1) {
+      return user[0];
+    }
+
+    return undefined;
   }
 }
