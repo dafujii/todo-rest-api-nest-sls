@@ -222,6 +222,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 3. テスト成功！
 4. コミット
 
+### リファクタリング
+
+2020/06/04 13:30 - 13:50
+
+1. 未使用変数削除
+2. any撲滅
+3. `username`をユニークに
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -268,6 +276,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - `synchronize:true` でマイグレーションを自動でしてくれる
 - `getRepositoryToken()` すごい
   - 任意の文字列を返すように定義したメソッドをDIできる
+- 戻り値の型を`string|undefined` にしなくても`string`だけでいいということ
 
 ## わからん
 
@@ -275,8 +284,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - 多分セキュリティグループ
 - nest.jsわからん
   - passportわからん
+  - ドキュメント生成
+    - https://docs.nestjs.com/recipes/documentation
+    - https://docs.nestjs.com/recipes/swagger
 - TypeORMわからん
-  - DBモックのテスト
+  - エンティティの定義が正しいかの検証方法
 - nest.js + Serverless Framework
   - `serverless-offline`
     - 毎回手動でビルドコマンド叩く必要がある？

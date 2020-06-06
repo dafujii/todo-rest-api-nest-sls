@@ -5,15 +5,16 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { IUser } from '../users/interface/user.interface';
 
 export type ToDoStatusType = 'ToDo' | 'WIP' | 'Done';
 
 @Entity()
-export class User {
+export class User implements IUser {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 64 })
+  @Column({ length: 64, unique: true })
   username: string;
 
   @Column({ length: 512 })
