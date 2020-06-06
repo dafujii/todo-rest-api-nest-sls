@@ -5,30 +5,33 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 describe('AuthService', () => {
   let service: AuthService;
 
   beforeEach(async () => {
+    const salt = bcrypt.genSaltSync();
+
     const users: User[] = [
       {
         id: 1,
         username: 'alpha',
-        password: '123456789',
+        password: bcrypt.hashSync('123456789', salt),
         created_at: new Date('2020-06-01T01:23:34'),
         updated_at: null,
       },
       {
         id: 2,
         username: 'bravo',
-        password: 'password',
+        password: bcrypt.hashSync('password', salt),
         created_at: new Date('2020-06-01T01:23:34'),
         updated_at: null,
       },
       {
         id: 3,
         username: 'charlie',
-        password: 'p@ssw0rd',
+        password: bcrypt.hashSync('p@ssw0rd', salt),
         created_at: new Date('2020-06-01T01:23:34'),
         updated_at: null,
       },

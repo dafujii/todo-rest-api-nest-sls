@@ -229,6 +229,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 1. 未使用変数削除
 2. any撲滅
 3. `username`をユニークに
+4. コミット
+
+### パスワードハッシュ使用
+
+2020/06/04 13:50 - 14:10
+
+1. bcryptがデファクトスタンダードみたい
+   1. `npm i -S bcrypt`
+   2. `npm i -D @types/bcrypt`
+2. 認証処理修正
+3. コミット
 
 ## 課題
 
@@ -240,9 +251,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - [ ] CodeDeploy
   - [ ] TypeORMのマイグレーションコマンド？
   - [ ] `deploy:dev`
-- [ ] パスワードハッシュ化
+- [x] パスワードハッシュ化
 - [ ] テスト
   - [x] DBモック
+- [ ] ユーザの登録
 
 ## わかったこと
 
@@ -277,6 +289,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - `getRepositoryToken()` すごい
   - 任意の文字列を返すように定義したメソッドをDIできる
 - 戻り値の型を`string|undefined` にしなくても`string`だけでいいということ
+- bcryptというハッシュ化関数がある
 
 ## わからん
 
@@ -312,6 +325,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - https://typeorm.io/
 - NestJS の TypeORM モジュールを利用したクリーンなデータストアアクセスの実装
   - https://qiita.com/potato4d/items/64a1f518abdfe281ce01
+- Nest.jsは素晴らしい
+  - https://qiita.com/kmatae/items/5aacc8375f71105ce0e4
 
 ## How to use
 
