@@ -263,7 +263,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### 本体のToDo部分作成！一覧取得！
 
-2020/06/06 19:40 - 21:00
+2020/06/06 19:40 - 21:30
 
 1. `./entities/todo.entity.ts`
    1. 1対多
@@ -280,6 +280,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
       1. `GET /todos/lists` で一覧返すようにする
       2. テスト書く
 6. コミット！
+7. 実際にリクエスト飛ばして確認したら依存解決できずダメだった😇
+8. 修正して確認してコミット！
 
 ## 課題
 
@@ -332,6 +334,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - 戻り値の型を`string|undefined` にしなくても`string`だけでいいということ
 - bcryptというハッシュ化関数がある
 - `@CreateDateColumn()`/`@UpdateDateColumn()`は`NOT NULL` になる
+- いくら単体テストかいてもE2Eテストしたらテスト範囲外の部分でエラーが出る……
 
 ## わからん
 

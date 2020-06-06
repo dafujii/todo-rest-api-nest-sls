@@ -9,6 +9,6 @@ export class TodosController {
   @UseGuards(JwtAuthGuard)
   @Get('list')
   findAll(@Request() req) {
-    return this.todosService.findAllByUser(req.id);
+    return this.todosService.findAllByUser(req.user.userId);
   }
 }

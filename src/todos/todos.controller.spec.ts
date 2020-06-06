@@ -53,7 +53,7 @@ describe('Todos Controller', () => {
   });
 
   it('user_id:2の一覧が取得できること', async () => {
-    const result = await controller.findAll({ id: 2 });
+    const result = await controller.findAll({ user: { userId: 2 } });
     expect(result.length).toBe(1);
     expect(result[0]).toEqual({
       id: 2,
