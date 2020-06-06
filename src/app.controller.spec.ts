@@ -85,16 +85,4 @@ describe('AppController', () => {
       expect(token.access_token).toBeDefined();
     });
   });
-
-  it('リクエストしたUser情報が閲覧できること', async () => {
-    const result = await appController.getProfile({
-      user: {
-        foo: 'bar',
-      },
-    });
-
-    expect(result).toEqual({
-      foo: 'bar',
-    });
-  });
 });

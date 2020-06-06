@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Test, TestingModule } from '@nestjs/testing';
+import { UsersController } from './users.controller';
+import { JwtModule } from '@nestjs/jwt';
 import { UsersService } from './users.service';
+import { AuthService } from '../auth/auth.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
-import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './dto/create-user.dto';
 import { IUser } from './interface/user.interface';
+import * as bcrypt from 'bcrypt';
 
-describe('UsersService', () => {
-  let service: UsersService;
+describe('Users Controller', () => {
+  let controller: UsersController;
 
   beforeEach(async () => {
     const salt = bcrypt.genSaltSync();
@@ -23,18 +27,19 @@ describe('UsersService', () => {
     ];
 
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        JwtModule.register({
+          secret: 'dummyfortest',
+          signOptions: { expiresIn: '5m' },
+        }),
+      ],
+      controllers: [UsersController],
       providers: [
+        AuthService,
         UsersService,
         {
           provide: getRepositoryToken(User),
           useValue: {
-            find: ({
-              where: { username },
-            }: {
-              where: { username: string };
-            }) => {
-              return [users.find(user => user.username === username)];
-            },
             save: (user: User): IUser => {
               users.push({
                 ...user,
@@ -49,25 +54,31 @@ describe('UsersService', () => {
       ],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    controller = module.get<UsersController>(UsersController);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-
-  it('alphaが取得できること', async () => {
-    const user = await service.findOne('alpha');
-    expect(user.username).toBe('alpha');
-  });
-
-  it('bravoが取得できないこと', async () => {
-    const user = await service.findOne('bravo');
-    expect(user).toBeUndefined();
+    expect(controller).toBeDefined();
   });
 
   it('charlieが作成できること', async () => {
-    const user = await service.create('charlie', 'p@ssw0rd');
+    const dto: CreateUserDto = {
+      username: 'charlie',
+      password: 'p@ssw0rd',
+    };
+    const user = await controller.create(dto);
     expect(user.username).toBe('charlie');
+  });
+
+  it('リクエストしたUser情報が閲覧できること', async () => {
+    const result = await controller.getProfile({
+      user: {
+        foo: 'bar',
+      },
+    });
+
+    expect(result).toEqual({
+      foo: 'bar',
+    });
   });
 });

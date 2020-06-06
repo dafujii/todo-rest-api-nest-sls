@@ -7,8 +7,6 @@ import {
 } from 'typeorm';
 import { IUser } from '../users/interface/user.interface';
 
-export type ToDoStatusType = 'ToDo' | 'WIP' | 'Done';
-
 @Entity()
 export class User implements IUser {
   @PrimaryGeneratedColumn()

@@ -224,7 +224,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### リファクタリング
 
-2020/06/04 13:30 - 13:50
+2020/06/06 13:30 - 13:50
 
 1. 未使用変数削除
 2. any撲滅
@@ -233,13 +233,33 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### パスワードハッシュ使用
 
-2020/06/04 13:50 - 14:10
+2020/06/06 13:50 - 14:10
 
 1. bcryptがデファクトスタンダードみたい
    1. `npm i -S bcrypt`
    2. `npm i -D @types/bcrypt`
 2. 認証処理修正
 3. コミット
+
+### ユーザ新規登録対応！
+
+2020/06/06 14:20 - 15:50
+
+1. `users/dto/create-user.dto.ts`
+2. `nest g co users`
+3. `getProfile()`を`UsersController`へ
+4. テスト修正
+5. ユーザ登録
+   1. `users.service.ts`
+   2. `users.controller.ts`
+   3. `users.service.spec.ts`
+      1. `findOne()`のテスト
+      2. `create()`のテスト
+   4. `users.controller.spec.ts`
+      1. `create()`のテスト
+6. テストのダブりがひどい😇
+7. REST Clientでテストも成功！
+8. コミット！
 
 ## 課題
 
@@ -288,8 +308,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - `synchronize:true` でマイグレーションを自動でしてくれる
 - `getRepositoryToken()` すごい
   - 任意の文字列を返すように定義したメソッドをDIできる
+  - その代わりTypeORMに任せていることがテストできない
 - 戻り値の型を`string|undefined` にしなくても`string`だけでいいということ
 - bcryptというハッシュ化関数がある
+- `@CreateDateColumn()`/`@UpdateDateColumn()`は`NOT NULL` になる
 
 ## わからん
 
@@ -297,6 +319,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - 多分セキュリティグループ
 - nest.jsわからん
   - passportわからん
+    - 新規登録後にログイン状態にする方法
   - ドキュメント生成
     - https://docs.nestjs.com/recipes/documentation
     - https://docs.nestjs.com/recipes/swagger
