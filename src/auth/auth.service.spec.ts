@@ -20,6 +20,7 @@ describe('AuthService', () => {
         password: bcrypt.hashSync('123456789', salt),
         created_at: new Date('2020-06-01T01:23:34'),
         updated_at: null,
+        todos: [],
       },
       {
         id: 2,
@@ -27,6 +28,7 @@ describe('AuthService', () => {
         password: bcrypt.hashSync('password', salt),
         created_at: new Date('2020-06-01T01:23:34'),
         updated_at: null,
+        todos: [],
       },
       {
         id: 3,
@@ -34,6 +36,7 @@ describe('AuthService', () => {
         password: bcrypt.hashSync('p@ssw0rd', salt),
         created_at: new Date('2020-06-01T01:23:34'),
         updated_at: null,
+        todos: [],
       },
     ];
 
@@ -55,7 +58,7 @@ describe('AuthService', () => {
             }: {
               where: { username: string };
             }) => {
-              return [users.find(user => user.username === username)];
+              return users.filter(user => user.username === username);
             },
           },
         },
@@ -76,6 +79,7 @@ describe('AuthService', () => {
       username: 'alpha',
       created_at: new Date('2020-06-01T01:23:34'),
       updated_at: null,
+      todos: [],
     });
   });
 

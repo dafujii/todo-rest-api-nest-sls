@@ -176,7 +176,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 1. `login-user.dto.ts`
 2. `nest g interface users/interface/user`
-3. `Gurd` で処理された結果が `@Request` に入って来てるので、DTOに置き換えられなさそう？
+3. `Guard` で処理された結果が `@Request` に入って来てるので、DTOに置き換えられなさそう？
    1. DTO削除
 4. `User` を `IUser` に置き換えてコミット
 
@@ -261,6 +261,26 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 7. REST Clientでテストも成功！
 8. コミット！
 
+### 本体のToDo部分作成！一覧取得！
+
+2020/06/06 19:40 - 21:00
+
+1. `./entities/todo.entity.ts`
+   1. 1対多
+   2. テスト修正
+2. `nest g module todos`
+3. `nest g service todos`
+4. `nest g controller todos`
+5. まずはユーザごとToDo一覧
+   1. Service
+      1. `findAllByUser()`
+      2. テスト書く
+         1. `Array.find()`と`Array.filter()`間違えていた😇
+   2. Controller
+      1. `GET /todos/lists` で一覧返すようにする
+      2. テスト書く
+6. コミット！
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -274,7 +294,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - [x] パスワードハッシュ化
 - [ ] テスト
   - [x] DBモック
-- [ ] ユーザの登録
+- [x] ユーザの登録
 
 ## わかったこと
 
@@ -325,11 +345,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
     - https://docs.nestjs.com/recipes/swagger
 - TypeORMわからん
   - エンティティの定義が正しいかの検証方法
+  - マイグレーションの実運用周り
 - nest.js + Serverless Framework
   - `serverless-offline`
     - 毎回手動でビルドコマンド叩く必要がある？
     - 初回実行時はHTTP 502返す？
 - ほぼ初めて触るフレームワークやORMでTDDやる方法
+- `Controller`から呼び出される`Service`内のメソッドは`Controller`のテストだけでOK？
+- `Controller`/`Service`/`Module`の単数形・複数形といった命名規則。todo? todos?
+- `@typescript-eslint/camelcase`でいちいち怒られるのつらい
 
 ## 参考記事
 

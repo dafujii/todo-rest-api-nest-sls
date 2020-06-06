@@ -4,8 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { IUser } from '../users/interface/user.interface';
+import { ToDo } from './todo.entity';
 
 @Entity()
 export class User implements IUser {
@@ -23,4 +25,10 @@ export class User implements IUser {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(
+    () => ToDo,
+    todo => todo.user_id,
+  )
+  todos: ToDo[];
 }
