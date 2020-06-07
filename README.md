@@ -23,12 +23,12 @@
   - タイトル
   - 内容
   - ステータス
-- [ ] 検索
+- [x] 検索
 - [x] 登録
 - [x] 更新
 - [x] 削除
 - [x] ユーザごとにToDo操作可能、認証/認可
-- [ ] テストコード
+- [x] テストコード
 - [ ] API仕様書
 
 ## Activity logs
@@ -352,6 +352,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 3. 実際に動作確認完了
 4. コミット
 
+### ToDo検索
+
+2020/06/07 20:15 - 21:30
+
+1. テキストの検索だけでいいよね
+2. 検索結果0件の場合でも200でいいんだよね？　404は意味が変わるし
+3. Service
+   1. まずテスト書いて失敗させる
+      1. モックで複数の`find()`を良い感じにしてやる方法がわからん
+   2. `search()`実装
+   3. とりあえずテストは通った
+4. Controller
+   1. `GET /todos/search/{text}`でええんやろか
+   2. テスト書いて失敗
+   3. `search()`実装
+   4. テスト通った
+5. 実際に確認
+6. コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -413,6 +432,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - 例外テスト書くときはラップする
 - 非同期の例外テスト書くときは`rejects`をはさむ
 - Jestで一致しないときは`not()`を使う
+- `spyOn()`で呼び出しを監視できる
 
 ## わからん
 
@@ -425,6 +445,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
     - https://docs.nestjs.com/recipes/documentation
     - https://docs.nestjs.com/recipes/swagger
   - モックの共通化
+    - モックの`find()`を良い感じにする方法
 - TypeORMわからん
   - エンティティの定義が正しいかの検証方法
   - マイグレーションの実運用周り
@@ -440,6 +461,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - `Controller`から`Service`への値受け渡しもDTO使っていいもん？
 - RESTful API設計わからん
   - レスポンスボディ何返すもんなん？
+- 検索クエリ全角文字あったらURLエンコードされて来るの？
 
 ## 参考記事
 

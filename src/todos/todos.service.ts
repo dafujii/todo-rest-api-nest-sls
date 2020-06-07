@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ToDo } from '../entities/todo.entity';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { CreateToDoDto } from './dto/create-todo.dto';
 import { UpdateToDoDto } from './dto/update-todo.dto';
 
@@ -24,6 +24,15 @@ export class TodosService {
 
   async findById(id: number) {
     return this.todoRepository.findOne(id);
+  }
+
+  async search(userId: number, searchText: string) {
+    return this.todoRepository.find({
+      where: {
+        user_id: userId,
+        text: Like(`%${searchText}%`),
+      },
+    });
   }
 
   async create(userId: number, createToDoDto: CreateToDoDto) {

@@ -28,12 +28,19 @@ export class TodosController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findById(@Param('id') id) {
+  async findById(@Param('id') id: number) {
     const todo = await this.todosService.findById(id);
     if (todo === undefined) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }
     return todo;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('search/:text')
+  async search(@Request() req, @Param('text') text: string) {
+    const todos = await this.todosService.search(req.user.userId, text);
+    return todos;
   }
 
   @UseGuards(JwtAuthGuard)
@@ -44,7 +51,7 @@ export class TodosController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  async update(@Param('id') id, @Body() updateToDoDto: UpdateToDoDto) {
+  async update(@Param('id') id: number, @Body() updateToDoDto: UpdateToDoDto) {
     const result = await this.todosService.update(id, updateToDoDto);
     if (result === undefined) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
@@ -54,7 +61,7 @@ export class TodosController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async delete(@Param('id') id) {
+  async delete(@Param('id') id: number) {
     const result = await this.todosService.delete(id);
     if (result === undefined) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);

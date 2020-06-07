@@ -4,12 +4,15 @@ import { TodosController } from './todos.controller';
 import { TodosService } from './todos.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ToDo } from '../entities/todo.entity';
+import { Repository } from 'typeorm';
 
 describe('Todos Controller', () => {
   let controller: TodosController;
+  let repo: Repository<ToDo>;
+  let todos: ToDo[];
 
   beforeEach(async () => {
-    let todos: ToDo[] = [
+    todos = [
       {
         id: 1,
         user_id: 1,
@@ -63,6 +66,7 @@ describe('Todos Controller', () => {
     }).compile();
 
     controller = module.get<TodosController>(TodosController);
+    repo = module.get<Repository<ToDo>>(getRepositoryToken(ToDo));
   });
 
   it('should be defined', () => {
@@ -137,5 +141,30 @@ describe('Todos Controller', () => {
         status: 'Done',
       });
     }).rejects.toThrow(/Not Found/);
+  });
+
+  it('user_id:2で「単体」を検索し1件取得できること', async () => {
+    jest
+      .spyOn(repo, 'find')
+      .mockResolvedValueOnce(
+        todos.filter(todo => todo.user_id === 2 && todo.text.includes('単体')),
+      );
+
+    const result = await controller.search({ user: { userId: 2 } }, '単体');
+    expect(result.length).toBe(1);
+    expect(result[0].text).toBe('コントローラの単体テスト書く');
+  });
+
+  it('user_id:4で「テスト」を検索し0件取得できること', async () => {
+    jest
+      .spyOn(repo, 'find')
+      .mockResolvedValueOnce(
+        todos.filter(
+          todo => todo.user_id === 4 && todo.text.includes('テスト'),
+        ),
+      );
+
+    const result = await controller.search({ user: { userId: 4 } }, 'テスト');
+    expect(result.length).toBe(0);
   });
 });
