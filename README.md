@@ -283,6 +283,24 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 7. 実際にリクエスト飛ばして確認したら依存解決できずダメだった😇
 8. 修正して確認してコミット！
 
+### ToDo登録機能！
+
+2020/06/07 14:00 - 14:35
+
+1. `todos.service.ts`
+   1. `create()`
+   2. テスト書く
+2. `dto/create-todo.dto.ts`
+3. `todos.controller.ts`
+   1. `POST /todos/` で登録させる！
+   2. `create()`
+   3. テスト書く
+4. テスト書いても`serverless-offline`で実際に動作確認しないと信頼できない状況改善したい
+   1. 登録確認💪
+5. SQLiteの中身を確認したらテーブル名が思ってたんと違う😇
+   1. `user` / `to_do`
+6. とりあえずコミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -296,6 +314,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - [x] パスワードハッシュ化
 - [ ] テスト
   - [x] DBモック
+  - [ ] E2Eテスト
 - [x] ユーザの登録
 
 ## わかったこと
@@ -349,6 +368,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - TypeORMわからん
   - エンティティの定義が正しいかの検証方法
   - マイグレーションの実運用周り
+  - 生成されるテーブル名を良い感じにする方法
 - nest.js + Serverless Framework
   - `serverless-offline`
     - 毎回手動でビルドコマンド叩く必要がある？
@@ -357,6 +377,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - `Controller`から呼び出される`Service`内のメソッドは`Controller`のテストだけでOK？
 - `Controller`/`Service`/`Module`の単数形・複数形といった命名規則。todo? todos?
 - `@typescript-eslint/camelcase`でいちいち怒られるのつらい
+- `Controller`から`Service`への値受け渡しもDTO使っていいもん？
 
 ## 参考記事
 

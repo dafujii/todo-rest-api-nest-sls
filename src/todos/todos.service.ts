@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ToDo } from '../entities/todo.entity';
 import { Repository } from 'typeorm';
+import { CreateToDoDto } from './dto/create-todo.dto';
 
 @Injectable()
 export class TodosService {
@@ -17,5 +19,13 @@ export class TodosService {
         user_id: userId,
       },
     });
+  }
+
+  async create(userId: number, createToDoDto: CreateToDoDto) {
+    const todo = new ToDo();
+    todo.text = createToDoDto.text;
+    todo.status = createToDoDto.status;
+    todo.user_id = userId;
+    return this.todoRepository.save(todo);
   }
 }

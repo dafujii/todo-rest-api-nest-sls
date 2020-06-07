@@ -39,6 +39,16 @@ describe('Todos Controller', () => {
             find: ({ where: { user_id } }: { where: { user_id: number } }) => {
               return todos.filter(todo => todo.user_id === user_id);
             },
+            save: (todo: ToDo) => {
+              const newItem = {
+                ...todo,
+                id: todos.length + 1,
+                created_at: new Date(),
+                updated_at: new Date(),
+              };
+              todos.push(newItem);
+              return newItem;
+            },
           },
         },
       ],
@@ -64,5 +74,19 @@ describe('Todos Controller', () => {
       updated_at: new Date('2020-05-06T20:40:00'),
       user: null,
     } as ToDo);
+  });
+
+  it('user_id:1のToDoが登録できること', async () => {
+    const result = await controller.create(
+      { user: { userId: 1 } },
+      {
+        text: '新規ToDo',
+        status: 'WIP',
+      },
+    );
+    expect(result.id).toBe(3);
+    expect(result.user_id).toBe(1);
+    expect(result.text).toBe('新規ToDo');
+    expect(result.status).toBe('WIP');
   });
 });

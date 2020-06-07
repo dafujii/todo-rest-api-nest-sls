@@ -29,6 +29,16 @@ describe('TodosService', () => {
             find: ({ where: { user_id } }: { where: { user_id: number } }) => {
               return todos.filter(todo => todo.user_id === user_id);
             },
+            save: (todo: ToDo) => {
+              const newItem = {
+                ...todo,
+                id: todos.length + 1,
+                created_at: new Date(),
+                updated_at: new Date(),
+              };
+              todos.push(newItem);
+              return newItem;
+            },
           },
         },
       ],
@@ -50,5 +60,13 @@ describe('TodosService', () => {
   it('userId:2の一覧が空で取得できること', async () => {
     const result = await service.findAllByUser(2);
     expect(result.length).toBe(0);
+  });
+
+  it('userId:1のToDoが登録できること', async () => {
+    const result = await service.create(1, {
+      text: '新規ToDo',
+      status: 'ToDo',
+    });
+    expect(result.text).toBe('新規ToDo');
   });
 });
