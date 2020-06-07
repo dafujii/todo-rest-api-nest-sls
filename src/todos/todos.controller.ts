@@ -25,6 +25,16 @@ export class TodosController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  async findById(@Param('id') id) {
+    const todo = await this.todosService.findById(id);
+    if (todo === undefined) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
+    return todo;
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Request() req, @Body() createToDoDto: CreateToDoDto) {
     return await this.todosService.create(req.user.userId, createToDoDto);

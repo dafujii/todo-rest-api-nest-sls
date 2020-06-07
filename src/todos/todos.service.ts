@@ -21,6 +21,10 @@ export class TodosService {
     });
   }
 
+  async findById(id: number) {
+    return this.todoRepository.findOne(id);
+  }
+
   async create(userId: number, createToDoDto: CreateToDoDto) {
     const todo = new ToDo();
     todo.text = createToDoDto.text;

@@ -107,4 +107,16 @@ describe('Todos Controller', () => {
       await controller.delete(10);
     }).rejects.toThrow(/Not Found/);
   });
+
+  it('id:1のToDoが取得できること', async () => {
+    const result = await controller.findById(1);
+    expect(result.id).toBe(1);
+    expect(result.text).toBe('単体テスト書く');
+  });
+
+  it('id:10のToDoが取得できないこと', async () => {
+    expect(async () => {
+      await controller.findById(10);
+    }).rejects.toThrow(/Not Found/);
+  });
 });

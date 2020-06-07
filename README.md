@@ -317,6 +317,24 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
          1. 例外のテストの書き方はまった
 3. 実際の動作確認も完了👍
 
+### ID指定して単一ToDo取得をTDDでやってみようの巻
+
+2020/06/07 17:00 - 17:10
+
+1. Service
+   1. テスト書く。失敗
+   2. `findById()`実装
+   3. テスト成功！
+2. Controller
+   1. テスト書く。失敗
+   2. `findById()`実装
+   3. テスト成功！
+   4. 存在しない場合のテスト書く。失敗
+   5. `findById()`改修
+   6. テスト成功！
+3. 実際に動作確認
+4. コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？

@@ -86,4 +86,10 @@ describe('TodosService', () => {
     const result = await service.delete(2);
     expect(result).toBeUndefined();
   });
+
+  it('id:1のToDoが取得できること', async () => {
+    const result = await service.findById(1);
+    expect(result.id).toBe(1);
+    expect(result.text).toBe('単体テスト書く');
+  });
 });
