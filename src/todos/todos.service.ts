@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ToDo } from '../entities/todo.entity';
 import { Repository } from 'typeorm';
 import { CreateToDoDto } from './dto/create-todo.dto';
+import { UpdateToDoDto } from './dto/update-todo.dto';
 
 @Injectable()
 export class TodosService {
@@ -30,6 +31,16 @@ export class TodosService {
     todo.text = createToDoDto.text;
     todo.status = createToDoDto.status;
     todo.user_id = userId;
+    return this.todoRepository.save(todo);
+  }
+
+  async update(id: number, updateToDoDto: UpdateToDoDto) {
+    const todo = await this.todoRepository.findOne(id);
+    if (todo === undefined) {
+      return undefined;
+    }
+    todo.text = updateToDoDto.text;
+    todo.status = updateToDoDto.status;
     return this.todoRepository.save(todo);
   }
 

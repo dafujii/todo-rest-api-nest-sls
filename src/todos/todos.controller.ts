@@ -9,10 +9,12 @@ import {
   Param,
   HttpException,
   HttpStatus,
+  Patch,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateToDoDto } from './dto/create-todo.dto';
+import { UpdateToDoDto } from './dto/update-todo.dto';
 
 @Controller('todos')
 export class TodosController {
@@ -38,6 +40,16 @@ export class TodosController {
   @Post()
   async create(@Request() req, @Body() createToDoDto: CreateToDoDto) {
     return await this.todosService.create(req.user.userId, createToDoDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  async update(@Param('id') id, @Body() updateToDoDto: UpdateToDoDto) {
+    const result = await this.todosService.update(id, updateToDoDto);
+    if (result === undefined) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
+    return result;
   }
 
   @UseGuards(JwtAuthGuard)

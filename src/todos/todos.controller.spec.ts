@@ -119,4 +119,23 @@ describe('Todos Controller', () => {
       await controller.findById(10);
     }).rejects.toThrow(/Not Found/);
   });
+
+  it('id:2のToDoが更新できること', async () => {
+    const result = await controller.update(2, {
+      text: '更新ToDo',
+      status: 'Done',
+    });
+    expect(result.user_id).toBe(2);
+    expect(result.text).toBe('更新ToDo');
+    expect(result.status).toBe('Done');
+  });
+
+  it('id:20のToDo更新でNot Foundが返ってくること', async () => {
+    expect(async () => {
+      await controller.update(20, {
+        text: '更新ToDo',
+        status: 'Done',
+      });
+    }).rejects.toThrow(/Not Found/);
+  });
 });

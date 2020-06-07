@@ -92,4 +92,13 @@ describe('TodosService', () => {
     expect(result.id).toBe(1);
     expect(result.text).toBe('単体テスト書く');
   });
+
+  it('id:1のToDoが更新できること', async () => {
+    const result = await service.update(1, {
+      text: 'ToDo更新',
+      status: 'WIP',
+    });
+    expect(result.text).toBe('ToDo更新');
+    expect(result.status).toBe('WIP');
+  });
 });

@@ -19,13 +19,13 @@
 
 ## 機能
 
-- [ ] ToDoアイテムの要素
-  - [ ] タイトル
-  - [ ] 内容
-  - [ ] ステータス
+- ToDoアイテムの要素
+  - タイトル
+  - 内容
+  - ステータス
 - [ ] 検索
 - [x] 登録
-- [ ] 更新
+- [x] 更新
 - [x] 削除
 - [x] ユーザごとにToDo操作可能、認証/認可
 - [ ] テストコード
@@ -335,6 +335,23 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 3. 実際に動作確認
 4. コミット
 
+### ToDo更新
+
+2020/06/07 17:10 - 17:35
+
+1. Service
+   1. テスト書いて失敗させる
+   2. `update()`実装
+      1. `update-todo.dto.ts`作成
+   3. テスト成功
+2. Controller
+   1. テスト書いて失敗させる
+   2. `update()`実装
+      1. `PATCH todos/{id}`になるよね
+   3. テスト成功
+3. 実際に動作確認完了
+4. コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -354,6 +371,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - [ ] レスポンス
   - [ ] 例外処理
   - [ ] `create()`: 201
+- [ ] バリデーション
 
 ## わかったこと
 
@@ -394,6 +412,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - いくら単体テストかいてもE2Eテストしたらテスト範囲外の部分でエラーが出る……
 - 例外テスト書くときはラップする
 - 非同期の例外テスト書くときは`rejects`をはさむ
+- Jestで一致しないときは`not()`を使う
 
 ## わからん
 
