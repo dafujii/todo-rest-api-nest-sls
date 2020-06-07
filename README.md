@@ -24,10 +24,10 @@
   - [ ] 内容
   - [ ] ステータス
 - [ ] 検索
-- [ ] 登録
+- [x] 登録
 - [ ] 更新
-- [ ] 削除
-- [ ] ユーザごとにToDo操作可能、認証/認可
+- [x] 削除
+- [x] ユーザごとにToDo操作可能、認証/認可
 - [ ] テストコード
 - [ ] API仕様書
 
@@ -301,6 +301,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    1. `user` / `to_do`
 6. とりあえずコミット
 
+### ToDo削除機能！
+
+2020/06/07 15:10 - 16:10
+
+1. `todos.service.ts`
+   1. `delete()`
+   2. テスト書く
+2. `todos.controller.ts`
+   1. `DELETE /todos/{id}`に決めた！
+   2. `delete()`
+      1. 何返すもんなん？
+         1. 返さんとこ！
+      2. テスト書く
+         1. 例外のテストの書き方はまった
+3. 実際の動作確認も完了👍
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -314,8 +330,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - [x] パスワードハッシュ化
 - [ ] テスト
   - [x] DBモック
+    - [ ] リポジトリ毎のモックを統一
   - [ ] E2Eテスト
 - [x] ユーザの登録
+- [ ] レスポンス
+  - [ ] 例外処理
+  - [ ] `create()`: 201
 
 ## わかったこと
 
@@ -354,6 +374,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - bcryptというハッシュ化関数がある
 - `@CreateDateColumn()`/`@UpdateDateColumn()`は`NOT NULL` になる
 - いくら単体テストかいてもE2Eテストしたらテスト範囲外の部分でエラーが出る……
+- 例外テスト書くときはラップする
+- 非同期の例外テスト書くときは`rejects`をはさむ
 
 ## わからん
 
@@ -365,6 +387,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - ドキュメント生成
     - https://docs.nestjs.com/recipes/documentation
     - https://docs.nestjs.com/recipes/swagger
+  - モックの共通化
 - TypeORMわからん
   - エンティティの定義が正しいかの検証方法
   - マイグレーションの実運用周り
@@ -378,6 +401,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - `Controller`/`Service`/`Module`の単数形・複数形といった命名規則。todo? todos?
 - `@typescript-eslint/camelcase`でいちいち怒られるのつらい
 - `Controller`から`Service`への値受け渡しもDTO使っていいもん？
+- RESTful API設計わからん
+  - レスポンスボディ何返すもんなん？
 
 ## 参考記事
 

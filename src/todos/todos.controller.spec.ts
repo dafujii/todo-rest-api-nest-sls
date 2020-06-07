@@ -9,7 +9,7 @@ describe('Todos Controller', () => {
   let controller: TodosController;
 
   beforeEach(async () => {
-    const todos: ToDo[] = [
+    let todos: ToDo[] = [
       {
         id: 1,
         user_id: 1,
@@ -39,6 +39,9 @@ describe('Todos Controller', () => {
             find: ({ where: { user_id } }: { where: { user_id: number } }) => {
               return todos.filter(todo => todo.user_id === user_id);
             },
+            findOne: (id: number) => {
+              return todos.find(todo => todo.id === id);
+            },
             save: (todo: ToDo) => {
               const newItem = {
                 ...todo,
@@ -48,6 +51,10 @@ describe('Todos Controller', () => {
               };
               todos.push(newItem);
               return newItem;
+            },
+            remove: (todo: ToDo) => {
+              todos = todos.filter(item => item.id !== todo.id);
+              return todo;
             },
           },
         },
@@ -88,5 +95,16 @@ describe('Todos Controller', () => {
     expect(result.user_id).toBe(1);
     expect(result.text).toBe('新規ToDo');
     expect(result.status).toBe('WIP');
+  });
+
+  it('id:1のToDoが削除できること', async () => {
+    const result = await controller.delete(1);
+    expect(result).toBeUndefined();
+  });
+
+  it('id:10のToDoを試みてNotFound例外が発生すること', async () => {
+    expect(async () => {
+      await controller.delete(10);
+    }).rejects.toThrow(/Not Found/);
   });
 });

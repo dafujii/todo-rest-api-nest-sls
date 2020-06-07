@@ -8,7 +8,7 @@ describe('TodosService', () => {
   let service: TodosService;
 
   beforeEach(async () => {
-    const todos: ToDo[] = [
+    let todos: ToDo[] = [
       {
         id: 1,
         user_id: 1,
@@ -29,6 +29,9 @@ describe('TodosService', () => {
             find: ({ where: { user_id } }: { where: { user_id: number } }) => {
               return todos.filter(todo => todo.user_id === user_id);
             },
+            findOne: (id: number) => {
+              return todos.find(todo => todo.id === id);
+            },
             save: (todo: ToDo) => {
               const newItem = {
                 ...todo,
@@ -38,6 +41,10 @@ describe('TodosService', () => {
               };
               todos.push(newItem);
               return newItem;
+            },
+            remove: (todo: ToDo) => {
+              todos = todos.filter(item => item.id !== todo.id);
+              return todo;
             },
           },
         },
@@ -68,5 +75,15 @@ describe('TodosService', () => {
       status: 'ToDo',
     });
     expect(result.text).toBe('新規ToDo');
+  });
+
+  it('id:1のToDoが削除できること', async () => {
+    const result = await service.delete(1);
+    expect(result.id).toBe(1);
+  });
+
+  it('id:2の削除でundefinedを返すこと', async () => {
+    const result = await service.delete(2);
+    expect(result).toBeUndefined();
   });
 });

@@ -28,4 +28,12 @@ export class TodosService {
     todo.user_id = userId;
     return this.todoRepository.save(todo);
   }
+
+  async delete(id: number) {
+    const todo = await this.todoRepository.findOne(id);
+    if (todo === undefined) {
+      return undefined;
+    }
+    return this.todoRepository.remove(todo);
+  }
 }

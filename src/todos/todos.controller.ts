@@ -5,6 +5,10 @@ import {
   Request,
   Post,
   Body,
+  Delete,
+  Param,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -16,13 +20,22 @@ export class TodosController {
 
   @UseGuards(JwtAuthGuard)
   @Get('list')
-  findAll(@Request() req) {
-    return this.todosService.findAllByUser(req.user.userId);
+  async findAll(@Request() req) {
+    return await this.todosService.findAllByUser(req.user.userId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Request() req, @Body() createToDoDto: CreateToDoDto) {
-    return this.todosService.create(req.user.userId, createToDoDto);
+  async create(@Request() req, @Body() createToDoDto: CreateToDoDto) {
+    return await this.todosService.create(req.user.userId, createToDoDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  async delete(@Param('id') id) {
+    const result = await this.todosService.delete(id);
+    if (result === undefined) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
   }
 }
