@@ -22,8 +22,8 @@ export class TodosService {
     });
   }
 
-  async findById(id: number) {
-    return this.todoRepository.findOne(id);
+  async findById(id: number, userId: number) {
+    return this.todoRepository.findOne(id, { where: { user_id: userId } });
   }
 
   async search(userId: number, searchText: string) {
@@ -43,8 +43,8 @@ export class TodosService {
     return this.todoRepository.save(todo);
   }
 
-  async update(id: number, updateToDoDto: UpdateToDoDto) {
-    const todo = await this.todoRepository.findOne(id);
+  async update(id: number, userId: number, updateToDoDto: UpdateToDoDto) {
+    const todo = await this.findById(id, userId);
     if (todo === undefined) {
       return undefined;
     }
@@ -53,8 +53,8 @@ export class TodosService {
     return this.todoRepository.save(todo);
   }
 
-  async delete(id: number) {
-    const todo = await this.todoRepository.findOne(id);
+  async delete(id: number, userId: number) {
+    const todo = await this.findById(id, userId);
     if (todo === undefined) {
       return undefined;
     }

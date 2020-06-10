@@ -7,18 +7,22 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { User } from './user.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export type ToDoStatusType = 'ToDo' | 'WIP' | 'Done';
 
 @Entity()
 export class ToDo {
   @PrimaryGeneratedColumn()
+  @ApiProperty()
   id: number;
 
   @Column()
+  @ApiProperty()
   user_id: number;
 
   @Column({ type: 'text' })
+  @ApiProperty()
   text: string;
 
   @Column({
@@ -27,12 +31,15 @@ export class ToDo {
     enum: ['ToDo', 'WIP', 'Done'],
     default: 'ToDo',
   })
+  @ApiProperty()
   status: ToDoStatusType;
 
   @CreateDateColumn()
+  @ApiProperty()
   created_at: Date;
 
   @UpdateDateColumn()
+  @ApiProperty()
   updated_at: Date;
 
   @ManyToOne(

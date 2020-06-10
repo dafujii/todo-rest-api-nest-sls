@@ -5,6 +5,7 @@
 - TypeScript
 - Nest.js
   - @nestjs/passport
+  - @nestjs/swagger
 - TypeORM
 - Serverless Framework
 - Jest
@@ -371,11 +372,40 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 5. 実際に確認
 6. コミット
 
+### Nest.jsはOpenAPIの定義の出力できるらしいのでやってみよう
+
+2020/06/10 19:25 - 22:20
+
+1. 公式ドキュメントの通りやってみる
+   1. `npm install --save @nestjs/swagger swagger-ui-express`
+   2. `main.ts`
+      1. 本番環境でも動いてしまう？
+         1. Lambdaではエントリポイントはhandlerになるからセーフ！
+   3. `npm run start`
+   4. `/api` でControllerから読み取られて既に定義が作られていることを確認！すごい
+      1. エントリポイントが環境ごとに`/dev`や`/prod`となるのどうしよう？
+   5. DTOの各プロパティに`@ApiProperty()`デコレータを使えば定義に現れる
+      1. ログインはDTO使ってないからDTOつくって、メソッドには`@ApiBody()`デコレータ
+   6. ログイン必須操作には`@ApiHeader()`デコレータを使う
+   7. レスポンスは`@ApiResponse()`
+      1. `@ApiNotFoundResponse()`などもある
+         1. `type:HttpException`にしても定義に現れない……
+            1. 仕方なくOpenAPI用クラスを作成
+               1. `openapi/HttpStatus.openapi.ts`
+      2. エンティティにも`@ApiProperty()`で定義に現れる
+         1. Date型はそのまま読み取ってくれる
+2. `main.ts`に`.setBasePath('dev')`追加して`npm run start`でもLambda同等のパスルーティングを実現！
+3. 他のユーザのToDo操作できるやんけ！
+   1. 修正！
+4. `nest start`と`serverless offline`の動作で挙動が違う……？
+5. 一旦コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
   - [ ] SQLiteでもいいか！
 - [ ] デプロイ時のマイグレーションどうする？
+  - [ ] `"synchronize": true`で自動化可能だが本番でやるものか？
 - [ ] 永続化
 - [ ] デプロイ方法は？
   - [ ] CodeDeploy
@@ -391,6 +421,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - [ ] 例外処理
   - [ ] `create()`: 201
 - [ ] バリデーション
+- [ ] API定義書を生成して公開する方法
 
 ## わかったこと
 
@@ -400,6 +431,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - RDS Proxy作成画面から「新しいシークレットを作成する」をしても作成画面内に更新ボタンがないので一旦キャンセルする必要がある
 - デプロイ時にServerless Framework はプロジェクト名をプレフィックスとしてIAMロールを作るが、64文字超えても何もしないので長すぎるとデプロイに失敗する
   - `todo-rest-api-nest-serverlessframework-dev-ap-northeast-1-lambdaRole` で69文字
+  - 書いた。[Serverless Framework はプロジェクト名が長すぎるとデプロイに失敗する](https://note.com/dafujii/n/n811f00608c88)
 - Nest.jsで認証周りはpassportというものがある
 - JWTのふいんき。名前とJSONを渡して認証するくらいのざっくり感しか知らなかったけど軽く動きが分かった
 - `serverless.yml` で `: ${ssm:/path/}` とすればSSMから値と取って設定してくれる
@@ -433,6 +465,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - 非同期の例外テスト書くときは`rejects`をはさむ
 - Jestで一致しないときは`not()`を使う
 - `spyOn()`で呼び出しを監視できる
+- `main.ts`に`app.setGlobalPrefix('dev');`と記述しておけば`npm run start`でLambdaで動かしたときと同じパスルーティングが実現できる
+- `@nestjs/swagger`すごい
+  - Union型は列挙型として展開してくれない
+- デコレータまみれ
 
 ## わからん
 
@@ -444,6 +480,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - ドキュメント生成
     - https://docs.nestjs.com/recipes/documentation
     - https://docs.nestjs.com/recipes/swagger
+      - もっとスマートにできないものか
   - モックの共通化
     - モックの`find()`を良い感じにする方法
 - TypeORMわからん
@@ -462,6 +499,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - RESTful API設計わからん
   - レスポンスボディ何返すもんなん？
 - 検索クエリ全角文字あったらURLエンコードされて来るの？
+- `nest start`と`serverless offline`とで挙動が違う件
 
 ## 参考記事
 

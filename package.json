@@ -28,6 +28,7 @@
     "@nestjs/jwt": "^7.0.0",
     "@nestjs/passport": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/swagger": "^4.5.10",
     "@nestjs/typeorm": "^7.0.1",
     "aws-lambda": "^1.0.6",
     "aws-serverless-express": "^3.3.8",
@@ -41,6 +42,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
     "sqlite3": "^4.2.0",
+    "swagger-ui-express": "^4.1.4",
     "typeorm": "^0.2.25"
   },
   "devDependencies": {

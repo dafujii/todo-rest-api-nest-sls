@@ -102,23 +102,23 @@ describe('TodosService', () => {
   });
 
   it('id:1のToDoが削除できること', async () => {
-    const result = await service.delete(1);
+    const result = await service.delete(1, 1);
     expect(result.id).toBe(1);
   });
 
   it('id:4の削除でundefinedを返すこと', async () => {
-    const result = await service.delete(4);
+    const result = await service.delete(4, 1);
     expect(result).toBeUndefined();
   });
 
   it('id:1のToDoが取得できること', async () => {
-    const result = await service.findById(1);
+    const result = await service.findById(1, 1);
     expect(result.id).toBe(1);
     expect(result.text).toBe('単体テスト書く');
   });
 
   it('id:1のToDoが更新できること', async () => {
-    const result = await service.update(1, {
+    const result = await service.update(1, 1, {
       text: 'ToDo更新',
       status: 'WIP',
     });

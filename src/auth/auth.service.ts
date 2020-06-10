@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '../entities/user.entity';
 import { IUser } from '../users/interface/user.interface';
 import * as bcrypt from 'bcrypt';
+import { IAccessToken } from './interface/accessToken.interface';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,7 @@ export class AuthService {
     return undefined;
   }
 
-  async login(user: User) {
+  async login(user: User): Promise<IAccessToken> {
     const payload = {
       username: user.username,
       sub: user.id,

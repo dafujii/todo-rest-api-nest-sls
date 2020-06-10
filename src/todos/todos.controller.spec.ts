@@ -102,30 +102,30 @@ describe('Todos Controller', () => {
   });
 
   it('id:1のToDoが削除できること', async () => {
-    const result = await controller.delete(1);
+    const result = await controller.delete({ user: { userId: 1 } }, 1);
     expect(result).toBeUndefined();
   });
 
   it('id:10のToDoを試みてNotFound例外が発生すること', async () => {
     expect(async () => {
-      await controller.delete(10);
+      await controller.delete({ user: { userId: 1 } }, 10);
     }).rejects.toThrow(/Not Found/);
   });
 
   it('id:1のToDoが取得できること', async () => {
-    const result = await controller.findById(1);
+    const result = await controller.findById({ user: { userId: 1 } }, 1);
     expect(result.id).toBe(1);
     expect(result.text).toBe('単体テスト書く');
   });
 
   it('id:10のToDoが取得できないこと', async () => {
     expect(async () => {
-      await controller.findById(10);
+      await controller.findById(10, 1);
     }).rejects.toThrow(/Not Found/);
   });
 
   it('id:2のToDoが更新できること', async () => {
-    const result = await controller.update(2, {
+    const result = await controller.update({ user: { userId: 2 } }, 2, {
       text: '更新ToDo',
       status: 'Done',
     });
@@ -136,7 +136,7 @@ describe('Todos Controller', () => {
 
   it('id:20のToDo更新でNot Foundが返ってくること', async () => {
     expect(async () => {
-      await controller.update(20, {
+      await controller.update(20, 1, {
         text: '更新ToDo',
         status: 'Done',
       });
