@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { JwtModule } from '@nestjs/jwt';
@@ -21,8 +20,8 @@ describe('Users Controller', () => {
         id: 1,
         username: 'alpha',
         password: bcrypt.hashSync('123456789', salt),
-        created_at: new Date('2020-06-01T01:23:34'),
-        updated_at: null,
+        createdAt: new Date('2020-06-01T01:23:34'),
+        updatedAt: null,
         todos: [],
       },
     ];
@@ -45,8 +44,8 @@ describe('Users Controller', () => {
               users.push({
                 ...user,
                 id: users.length++,
-                created_at: new Date(),
-                updated_at: null,
+                createdAt: new Date(),
+                updatedAt: null,
               } as User);
               return user;
             },

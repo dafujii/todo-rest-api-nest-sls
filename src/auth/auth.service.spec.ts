@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
@@ -18,24 +17,24 @@ describe('AuthService', () => {
         id: 1,
         username: 'alpha',
         password: bcrypt.hashSync('123456789', salt),
-        created_at: new Date('2020-06-01T01:23:34'),
-        updated_at: null,
+        createdAt: new Date('2020-06-01T01:23:34'),
+        updatedAt: null,
         todos: [],
       },
       {
         id: 2,
         username: 'bravo',
         password: bcrypt.hashSync('password', salt),
-        created_at: new Date('2020-06-01T01:23:34'),
-        updated_at: null,
+        createdAt: new Date('2020-06-01T01:23:34'),
+        updatedAt: null,
         todos: [],
       },
       {
         id: 3,
         username: 'charlie',
         password: bcrypt.hashSync('p@ssw0rd', salt),
-        created_at: new Date('2020-06-01T01:23:34'),
-        updated_at: null,
+        createdAt: new Date('2020-06-01T01:23:34'),
+        updatedAt: null,
         todos: [],
       },
     ];
@@ -77,8 +76,8 @@ describe('AuthService', () => {
     expect(result).toEqual({
       id: 1,
       username: 'alpha',
-      created_at: new Date('2020-06-01T01:23:34'),
-      updated_at: null,
+      createdAt: new Date('2020-06-01T01:23:34'),
+      updatedAt: null,
       todos: [],
     });
   });

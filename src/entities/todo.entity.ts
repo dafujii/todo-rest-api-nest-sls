@@ -5,21 +5,22 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 export type ToDoStatusType = 'ToDo' | 'WIP' | 'Done';
 
-@Entity()
+@Entity('todos')
 export class ToDo {
   @PrimaryGeneratedColumn()
   @ApiProperty()
   id: number;
 
-  @Column()
+  @Column({ name: 'user_id' })
   @ApiProperty()
-  user_id: number;
+  userId: number;
 
   @Column({ type: 'text' })
   @ApiProperty()
@@ -34,17 +35,18 @@ export class ToDo {
   @ApiProperty()
   status: ToDoStatusType;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   @ApiProperty()
-  created_at: Date;
+  createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   @ApiProperty()
-  updated_at: Date;
+  updatedAt: Date;
 
   @ManyToOne(
     () => User,
     user => user.todos,
   )
+  @JoinColumn({ name: 'user_id' })
   user: User;
 }

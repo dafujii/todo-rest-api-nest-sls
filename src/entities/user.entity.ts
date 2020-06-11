@@ -9,7 +9,7 @@ import {
 import { IUser } from '../users/interface/user.interface';
 import { ToDo } from './todo.entity';
 
-@Entity()
+@Entity('users')
 export class User implements IUser {
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,15 +20,15 @@ export class User implements IUser {
   @Column({ length: 512 })
   password: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
   @OneToMany(
     () => ToDo,
-    todo => todo.user_id,
+    todo => todo.userId,
   )
   todos: ToDo[];
 }

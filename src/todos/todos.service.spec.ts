@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { Test, TestingModule } from '@nestjs/testing';
 import { TodosService } from './todos.service';
 import { ToDo } from '../entities/todo.entity';
@@ -14,29 +13,29 @@ describe('TodosService', () => {
     todos = [
       {
         id: 1,
-        user_id: 1,
+        userId: 1,
         text: '単体テスト書く',
         status: 'WIP',
-        created_at: new Date('2020-05-06T20:00:00'),
-        updated_at: new Date('2020-05-06T20:00:00'),
+        createdAt: new Date('2020-05-06T20:00:00'),
+        updatedAt: new Date('2020-05-06T20:00:00'),
         user: null,
       },
       {
         id: 2,
-        user_id: 1,
+        userId: 1,
         text: 'E2Eテスト書く',
         status: 'ToDo',
-        created_at: new Date('2020-06-06T21:00:00'),
-        updated_at: new Date('2020-06-06T21:00:00'),
+        createdAt: new Date('2020-06-06T21:00:00'),
+        updatedAt: new Date('2020-06-06T21:00:00'),
         user: null,
       },
       {
         id: 3,
-        user_id: 1,
+        userId: 1,
         text: '納品',
         status: 'ToDo',
-        created_at: new Date('2020-06-07T20:00:00'),
-        updated_at: new Date('2020-06-07T20:00:00'),
+        createdAt: new Date('2020-06-07T20:00:00'),
+        updatedAt: new Date('2020-06-07T20:00:00'),
         user: null,
       },
     ];
@@ -47,8 +46,8 @@ describe('TodosService', () => {
         {
           provide: getRepositoryToken(ToDo),
           useValue: {
-            find: ({ where: { user_id } }: { where: { user_id: number } }) => {
-              return todos.filter(todo => todo.user_id === user_id);
+            find: ({ where: { userId } }: { where: { userId: number } }) => {
+              return todos.filter(todo => todo.userId === userId);
             },
             findOne: (id: number) => {
               return todos.find(todo => todo.id === id);
@@ -57,8 +56,8 @@ describe('TodosService', () => {
               const newItem = {
                 ...todo,
                 id: todos.length + 1,
-                created_at: new Date(),
-                updated_at: new Date(),
+                createdAt: new Date(),
+                updatedAt: new Date(),
               };
               todos.push(newItem);
               return newItem;
@@ -126,13 +125,11 @@ describe('TodosService', () => {
     expect(result.status).toBe('WIP');
   });
 
-  it('user_id:1で「テスト」で検索し2件取得できること', async () => {
+  it('userId:1で「テスト」で検索し2件取得できること', async () => {
     jest
       .spyOn(repo, 'find')
       .mockResolvedValueOnce(
-        todos.filter(
-          todo => todo.user_id === 1 && todo.text.includes('テスト'),
-        ),
+        todos.filter(todo => todo.userId === 1 && todo.text.includes('テスト')),
       );
 
     const result = await service.search(1, 'テスト');

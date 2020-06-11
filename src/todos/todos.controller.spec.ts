@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { Test, TestingModule } from '@nestjs/testing';
 import { TodosController } from './todos.controller';
 import { TodosService } from './todos.service';
@@ -15,20 +14,20 @@ describe('Todos Controller', () => {
     todos = [
       {
         id: 1,
-        user_id: 1,
+        userId: 1,
         text: '単体テスト書く',
         status: 'ToDo',
-        created_at: new Date('2020-05-06T20:00:00'),
-        updated_at: new Date('2020-05-06T20:00:00'),
+        createdAt: new Date('2020-05-06T20:00:00'),
+        updatedAt: new Date('2020-05-06T20:00:00'),
         user: null,
       },
       {
         id: 2,
-        user_id: 2,
+        userId: 2,
         text: 'コントローラの単体テスト書く',
         status: 'ToDo',
-        created_at: new Date('2020-05-06T20:40:00'),
-        updated_at: new Date('2020-05-06T20:40:00'),
+        createdAt: new Date('2020-05-06T20:40:00'),
+        updatedAt: new Date('2020-05-06T20:40:00'),
         user: null,
       },
     ];
@@ -39,8 +38,8 @@ describe('Todos Controller', () => {
         {
           provide: getRepositoryToken(ToDo),
           useValue: {
-            find: ({ where: { user_id } }: { where: { user_id: number } }) => {
-              return todos.filter(todo => todo.user_id === user_id);
+            find: ({ where: { userId } }: { where: { userId: number } }) => {
+              return todos.filter(todo => todo.userId === userId);
             },
             findOne: (id: number) => {
               return todos.find(todo => todo.id === id);
@@ -49,8 +48,8 @@ describe('Todos Controller', () => {
               const newItem = {
                 ...todo,
                 id: todos.length + 1,
-                created_at: new Date(),
-                updated_at: new Date(),
+                createdAt: new Date(),
+                updatedAt: new Date(),
               };
               todos.push(newItem);
               return newItem;
@@ -73,21 +72,21 @@ describe('Todos Controller', () => {
     expect(controller).toBeDefined();
   });
 
-  it('user_id:2の一覧が取得できること', async () => {
+  it('userId:2の一覧が取得できること', async () => {
     const result = await controller.findAll({ user: { userId: 2 } });
     expect(result.length).toBe(1);
     expect(result[0]).toEqual({
       id: 2,
-      user_id: 2,
+      userId: 2,
       text: 'コントローラの単体テスト書く',
       status: 'ToDo',
-      created_at: new Date('2020-05-06T20:40:00'),
-      updated_at: new Date('2020-05-06T20:40:00'),
+      createdAt: new Date('2020-05-06T20:40:00'),
+      updatedAt: new Date('2020-05-06T20:40:00'),
       user: null,
     } as ToDo);
   });
 
-  it('user_id:1のToDoが登録できること', async () => {
+  it('userId:1のToDoが登録できること', async () => {
     const result = await controller.create(
       { user: { userId: 1 } },
       {
@@ -96,7 +95,7 @@ describe('Todos Controller', () => {
       },
     );
     expect(result.id).toBe(3);
-    expect(result.user_id).toBe(1);
+    expect(result.userId).toBe(1);
     expect(result.text).toBe('新規ToDo');
     expect(result.status).toBe('WIP');
   });
@@ -129,7 +128,7 @@ describe('Todos Controller', () => {
       text: '更新ToDo',
       status: 'Done',
     });
-    expect(result.user_id).toBe(2);
+    expect(result.userId).toBe(2);
     expect(result.text).toBe('更新ToDo');
     expect(result.status).toBe('Done');
   });
@@ -143,11 +142,11 @@ describe('Todos Controller', () => {
     }).rejects.toThrow(/Not Found/);
   });
 
-  it('user_id:2で「単体」を検索し1件取得できること', async () => {
+  it('userId:2で「単体」を検索し1件取得できること', async () => {
     jest
       .spyOn(repo, 'find')
       .mockResolvedValueOnce(
-        todos.filter(todo => todo.user_id === 2 && todo.text.includes('単体')),
+        todos.filter(todo => todo.userId === 2 && todo.text.includes('単体')),
       );
 
     const result = await controller.search({ user: { userId: 2 } }, '単体');
@@ -155,13 +154,11 @@ describe('Todos Controller', () => {
     expect(result[0].text).toBe('コントローラの単体テスト書く');
   });
 
-  it('user_id:4で「テスト」を検索し0件取得できること', async () => {
+  it('userId:4で「テスト」を検索し0件取得できること', async () => {
     jest
       .spyOn(repo, 'find')
       .mockResolvedValueOnce(
-        todos.filter(
-          todo => todo.user_id === 4 && todo.text.includes('テスト'),
-        ),
+        todos.filter(todo => todo.userId === 4 && todo.text.includes('テスト')),
       );
 
     const result = await controller.search({ user: { userId: 4 } }, 'テスト');

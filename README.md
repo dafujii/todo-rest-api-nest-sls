@@ -13,6 +13,7 @@
 - Lambda
 - RDS Proxy
 - RDS for MySQL
+- Systems Manager Parameter Store
 
 ![./docs/aws_architecture.png](./docs/aws_architecture.png)
 
@@ -400,6 +401,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 4. `nest start`と`serverless offline`の動作で挙動が違う……？
 5. 一旦コミット
 
+### TypeORMが自動生成するテーブルをきれいにしたい
+
+2020/06/11 16:00 - 17:00
+
+1. テーブル名指定できた
+   1. `users`/`todos`
+2. コード上では`created_at`/`updated_at`を`createdAt`/`updatedAt`になるようにもできる
+3. リレーションの張り方修正
+4. テスト修正
+5. 挙動の違い判明！
+6. コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -468,7 +481,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - `main.ts`に`app.setGlobalPrefix('dev');`と記述しておけば`npm run start`でLambdaで動かしたときと同じパスルーティングが実現できる
 - `@nestjs/swagger`すごい
   - Union型は列挙型として展開してくれない
-- デコレータまみれ
+- デコレータまみれ。`@nestjs/swagger`はもう使うことないかも
+- `nest start`と`serverless offline`の動作で挙動が違う
+  - `nest start`で起動した際は、POST時に`Content-Type: application/json`つけないと500エラー返すっぽい
 
 ## わからん
 
@@ -477,6 +492,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - nest.jsわからん
   - passportわからん
     - 新規登録後にログイン状態にする方法
+    - 今の実装がセキュリティ的に安全かわからん
   - ドキュメント生成
     - https://docs.nestjs.com/recipes/documentation
     - https://docs.nestjs.com/recipes/swagger
@@ -484,9 +500,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - モックの共通化
     - モックの`find()`を良い感じにする方法
 - TypeORMわからん
-  - エンティティの定義が正しいかの検証方法
   - マイグレーションの実運用周り
-  - 生成されるテーブル名を良い感じにする方法
 - nest.js + Serverless Framework
   - `serverless-offline`
     - 毎回手動でビルドコマンド叩く必要がある？
@@ -499,7 +513,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - RESTful API設計わからん
   - レスポンスボディ何返すもんなん？
 - 検索クエリ全角文字あったらURLエンコードされて来るの？
-- `nest start`と`serverless offline`とで挙動が違う件
 
 ## 参考記事
 

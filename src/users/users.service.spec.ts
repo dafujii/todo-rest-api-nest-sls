@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -17,8 +16,8 @@ describe('UsersService', () => {
         id: 1,
         username: 'alpha',
         password: bcrypt.hashSync('123456789', salt),
-        created_at: new Date('2020-06-01T01:23:34'),
-        updated_at: null,
+        createdAt: new Date('2020-06-01T01:23:34'),
+        updatedAt: null,
         todos: [],
       },
     ];
@@ -40,8 +39,8 @@ describe('UsersService', () => {
               users.push({
                 ...user,
                 id: users.length++,
-                created_at: new Date(),
-                updated_at: null,
+                createdAt: new Date(),
+                updatedAt: null,
               } as User);
               return user;
             },
