@@ -413,6 +413,30 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 5. 挙動の違い判明！
 6. コミット
 
+### 環境ごとにDB接続先を変えたい（開発環境）
+
+2020/06/11 20:10 - 21:10
+
+1. 環境は以下のように分けたい
+   - `local`: SQLite
+   - `test`: SQLite
+   - `dev`: RDS for MySQL
+   - `prod`: RDS for MySQL
+2. `dev`/`prod`の接続情報はSSMから読み取ることになりそう
+3. まずは`local`/`test`でDB分けるようにする
+   1. `ormconfig.json`から`ormconfig.js`に変更
+   2. DB定義
+   3. `npm i -D cross-env`
+   4. `package.json`のscripts変更
+   5. E2Eテストで`test`が動作するか確認
+      1. テストは通らないけど`test`が使われていること確認😅
+4. `dist/`をLambdaに上げるからルートに置いてる`ormconfig.js`が役立たずになる件
+   1. `ormconfig.js`を`./src/db.config.ts`に変更
+   2. おそらく`entities`や`migrations`もパス変わるよね
+   3. E2Eテスト動くようになった
+5. `local`/`test`で分けることには成功
+6. コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -421,7 +445,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - [ ] `"synchronize": true`で自動化可能だが本番でやるものか？
 - [ ] 永続化
 - [ ] デプロイ方法は？
-  - [ ] CodeDeploy
+  - [ ] CodeBuild
   - [ ] TypeORMのマイグレーションコマンド？
   - [ ] `deploy:dev`
 - [x] パスワードハッシュ化
@@ -435,6 +459,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - [ ] `create()`: 201
 - [ ] バリデーション
 - [ ] API定義書を生成して公開する方法
+- [ ] CI/CD
+  - [ ] GitHub Actions
+  - [ ] CodePipeline
 
 ## わかったこと
 
@@ -484,6 +511,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - デコレータまみれ。`@nestjs/swagger`はもう使うことないかも
 - `nest start`と`serverless offline`の動作で挙動が違う
   - `nest start`で起動した際は、POST時に`Content-Type: application/json`つけないと500エラー返すっぽい
+- E2Eテストは`ts-jest`で動かしているのでTypeScriptコードを参照させる
 
 ## わからん
 
@@ -533,6 +561,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - https://qiita.com/potato4d/items/64a1f518abdfe281ce01
 - Nest.jsは素晴らしい
   - https://qiita.com/kmatae/items/5aacc8375f71105ce0e4
+- 【待望リリース！】もう Lambda×RDS は怖くない！LambdaでRDSプロキシを徹底的に検証してみた 〜全てがサーバレスになる〜
+  - https://qiita.com/G-awa/items/b9138cc1c9e4867a905e
 
 ## How to use
 
