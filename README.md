@@ -455,7 +455,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### Lambdaにデプロイさせたい
 
-2020/06/13 14:00 - 
+2020/06/13 14:00 - 18:00
 
 1. RDS Proxy作り直し
    1. dafujii-rds-proxy-20200613
@@ -500,6 +500,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
          3. `aws ssm put-parameter --name "/dafujii/todo-rest-api-nest-sls/dev/DB_PASSWORD" --description "DB_PASSWORD"  --type "String" --value "{PASSWORD}"`
          4. `aws ssm put-parameter --name "/dafujii/todo-rest-api-nest-sls/dev/DB_DATABASE" --description "DB_DATABASE"  --type "String" --value "{DATABASE}"`
       4. 一旦コミット
+         1. CodeBuildデプロイログは成功
+         2. 結局これ`invalid ELF header`（知ってた）
+         3. `serverless remove`した後にCodePipeline動かしたらこのエラーは無くなった……。S3に残ってたのが悪さして多っぽい？
+         4. そしてDB接続エラー
 
 ## 課題
 
@@ -508,16 +512,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - [ ] デプロイ時のマイグレーションどうする？
   - [ ] `"synchronize": true`で自動化可能だが本番でやるものか？
 - [ ] 永続化
-- [ ] デプロイ方法は？
-  - [ ] CodeBuild
-  - [ ] TypeORMのマイグレーションコマンド？
-  - [ ] `deploy:dev`
-- [x] パスワードハッシュ化
 - [ ] テスト
   - [x] DBモック
     - [ ] リポジトリ毎のモックを統一
   - [ ] E2Eテスト
-- [x] ユーザの登録
 - [ ] レスポンス
   - [ ] 例外処理
   - [ ] `create()`: 201
@@ -581,11 +579,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - TypeORMのORの書き方
   - 配列で渡す。`A AND (B OR C)` も分解させる。
 - 最初に作ったＲＤS Proxyで$30ほど課金発生していた😇 使うときに作るの大事
+- 環境依存はDockerよりCodeBuildでやるのがCD環境も整うし手っ取り早い
 
 ## わからん
 
 - RDS Proxy繋がらん原因わからん
-  - 多分セキュリティグループ
 - nest.jsわからん
   - passportわからん
     - 新規登録後にログイン状態にする方法
