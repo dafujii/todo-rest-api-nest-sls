@@ -28,11 +28,11 @@ provider:
     LANG: ja_JP.UTF-8
     AUTH_SECRET: ${ssm:/dafujii/todo-rest-api-nest-sls/AUTH_SECRET}
     NODE_ENV: ${self:custom.${opt:stage, 'dev'}.environment.NODE_ENV}
-    DB_HOST: ${self:custom.${opt:stage, 'dev'}.environment.DB_HOST}}
+    DB_HOST: ${self:custom.${opt:stage, 'dev'}.environment.DB_HOST}
     DB_PORT: 3306
-    DB_USERNAME: ${self:custom.${opt:stage, 'dev'}.environment.DB_USERNAME}}
-    DB_PASSWORD: ${self:custom.${opt:stage, 'dev'}.environment.DB_PASSWORD}}
-    DB_DATABASE: ${self:custom.${opt:stage, 'dev'}.environment.DB_DATABASE}}
+    DB_USERNAME: ${self:custom.${opt:stage, 'dev'}.environment.DB_USERNAME}
+    DB_PASSWORD: ${self:custom.${opt:stage, 'dev'}.environment.DB_PASSWORD}
+    DB_DATABASE: ${self:custom.${opt:stage, 'dev'}.environment.DB_DATABASE}
     versionFunctions: false
   deploymentBucket:
     name: dafujii-serverless-deploymentbucket
