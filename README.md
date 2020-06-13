@@ -505,6 +505,28 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
          3. `serverless remove`した後にCodePipeline動かしたらこのエラーは無くなった……。S3に残ってたのが悪さして多っぽい？
          4. そしてDB接続エラー
 
+### RDSに接続したい
+
+2020/06/13 20:10 - 22:00
+
+1. `serverless.yml`の`provider.environment`にDB接続情報書いてなかったね！
+   1. いちいちpushする必要があるのは手間。コミット履歴残るのもﾊｽﾞｶｼｲ
+   2. それでもDB接続タイムアウトによるエラー
+2. VPC Lambdaのセキュリティーグループが想定してたのと違っていた
+   1. 変わらず
+3. 単純にMySQLの接続情報が間違っている説
+   1. パスワード再設定
+   2. ついでにLambdaのタイムアウトを延ばす
+   3. `Error: Handshake inactivity timeout`
+4. RDS Proxyに付与していたIAMポリシー修正
+   1. 変わらず
+5. RDS Proxy使わずにRDS直接続してみる
+   1. ダメ
+6. Lambda関数にAdminAccessポリシーをアタッチしてみる
+   1. ダメ
+7. DBにはつなぎに行けている感はある。
+   1. TODO: RDS再作成
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -580,6 +602,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - 配列で渡す。`A AND (B OR C)` も分解させる。
 - 最初に作ったＲＤS Proxyで$30ほど課金発生していた😇 使うときに作るの大事
 - 環境依存はDockerよりCodeBuildでやるのがCD環境も整うし手っ取り早い
+- MySQLのconnect_timeoutのデフォルト値は10秒
 
 ## わからん
 
@@ -608,6 +631,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - RESTful API設計わからん
   - レスポンスボディ何返すもんなん？
 - 検索クエリ全角文字あったらURLエンコードされて来るの？
+- ネットワーク分からん
+  - どこにどのセキュリティグループ割り当てたのかすぐ迷子になる
+  - セキュリティグループの設定もどこで何やったか時間たつと忘れる
+  - 今回NATゲートウェイが存在する意味わからん。外に出ないなら不要？
 
 ## 参考記事
 
