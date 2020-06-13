@@ -124,7 +124,7 @@ describe('Todos Controller', () => {
 
   it('id:10のToDoが取得できないこと', async () => {
     expect(async () => {
-      await controller.findById(10, 1);
+      await controller.findById({ user: { userId: 10 } }, 1);
     }).rejects.toThrow(/Not Found/);
   });
 
@@ -142,7 +142,7 @@ describe('Todos Controller', () => {
 
   it('id:20のToDo更新でNot Foundが返ってくること', async () => {
     expect(async () => {
-      await controller.update(20, 1, {
+      await controller.update({ user: { userId: 20 } }, 1, {
         title: '更新ToDo',
         text: '更新ToDo',
         status: 'Done',

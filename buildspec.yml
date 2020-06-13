@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      - npm install -g serverless
+  pre_build:
+    commands:
+      - npm install
+  post_build:
+    commands:
+      - npm run deploy:dev

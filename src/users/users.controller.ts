@@ -16,8 +16,8 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('create')
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.usersService.create(
       createUserDto.username,
       createUserDto.password,
     );
@@ -26,7 +26,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   @ApiHeader({ name: 'Authorization', description: 'Bearer {JWT}' })
-  getProfile(@Request() req) {
+  async getProfile(@Request() req) {
     return req.user;
   }
 }

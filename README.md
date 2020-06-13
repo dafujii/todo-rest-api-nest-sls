@@ -453,6 +453,54 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 4. 動作確認
 5. コミット
 
+### Lambdaにデプロイさせたい
+
+2020/06/13 14:00 - 
+
+1. RDS Proxy作り直し
+   1. dafujii-rds-proxy-20200613
+2. `serverless.yml`
+   1. 環境ごとに定義
+   2. IAMロール追加
+3. `db.config.ts`に`dev`追加
+   1. いったん直書きで`npm run deploy:dev`
+   2. 待ち時間長い
+   3. 500エラー😇
+   4. `slss logs -f index`
+      1. `{"errorType":"Error","errorMessage":"/opt/nodejs/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node: invalid ELF header","stack":["Error: /opt/nodejs/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node: invalid ELF header"`
+         1. ネイティブモジュールのためWindowsのnode_modulesを上げてる現状では動かないってことかな？
+            1. 実際にLambdaデプロイするときはCodeBuild使う
+         2. とりあえずAmazon Linux 2のDockerコンテナでnode_modules作る
+            1. `node_modules`削除
+            2. `docker pull amazonlinux:latest`
+            3. `docker run -it -v $PWD/:/todo-rest-api-nest-sls --name native-module-sample amazonlinux:latest`
+               1. `curl -sL https://rpm.nodesource.com/setup_12.x | bash -`
+               2. `yum install gcc-c++ make -y`
+               3. `yum install -y nodejs`
+               4. `cd todo-rest-api-nest-sls/`
+               5. `npm i`
+                  1. 止まった……。初めからやり直し
+                  2. マウントが途中で切れる……？
+               6. `npx jest`失敗🤔
+                  1. `Cannot find module '/todo-rest-api-nest-sls/todo-rest-api-nest-sls/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node' from 'bcrypt.js'`
+               7. 何回か`docker run`からやり直したら行けた……
+         3. `npm run deploy:dev`
+            1. 🤔`bcrypt_lib.node: invalid ELF header`
+   5. CodeBuildに切り替えてく
+      1. CodePipeline
+         1. `dafujii-todo-rest-api-nest-sls`
+         2. GitHub連携
+         3. CodeBuild
+            1. `dafujii-todo-rest-api-nest-sls`
+      2. IAM
+         1. CodeBuildのIAM Roleに`AdministratorAccess`付与
+      3. DB接続情報
+         1. `aws ssm put-parameter --name "/dafujii/todo-rest-api-nest-sls/dev/DB_HOST" --description "DB_HOST"  --type "String" --value "{HOST}"`
+         2. `aws ssm put-parameter --name "/dafujii/todo-rest-api-nest-sls/dev/DB_USERNAME" --description "DB_USERNAME"  --type "String" --value "{USERNAME}"`
+         3. `aws ssm put-parameter --name "/dafujii/todo-rest-api-nest-sls/dev/DB_PASSWORD" --description "DB_PASSWORD"  --type "String" --value "{PASSWORD}"`
+         4. `aws ssm put-parameter --name "/dafujii/todo-rest-api-nest-sls/dev/DB_DATABASE" --description "DB_DATABASE"  --type "String" --value "{DATABASE}"`
+      4. 一旦コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -478,6 +526,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - [ ] CI/CD
   - [ ] GitHub Actions
   - [ ] CodePipeline
+- [ ] serverless-prune-plugin
 
 ## わかったこと
 
@@ -515,6 +564,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - その代わりTypeORMに任せていることがテストできない
 - 戻り値の型を`string|undefined` にしなくても`string`だけでいいということ
 - bcryptというハッシュ化関数がある
+  - ネイティブモジュールのため、WindowsのローカルからLambdaへデプロイすると動かない
 - `@CreateDateColumn()`/`@UpdateDateColumn()`は`NOT NULL` になる
 - いくら単体テストかいてもE2Eテストしたらテスト範囲外の部分でエラーが出る……
 - 例外テスト書くときはラップする
@@ -530,6 +580,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - E2Eテストは`ts-jest`で動かしているのでTypeScriptコードを参照させる
 - TypeORMのORの書き方
   - 配列で渡す。`A AND (B OR C)` も分解させる。
+- 最初に作ったＲＤS Proxyで$30ほど課金発生していた😇 使うときに作るの大事
 
 ## わからん
 
@@ -581,6 +632,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - https://qiita.com/kmatae/items/5aacc8375f71105ce0e4
 - 【待望リリース！】もう Lambda×RDS は怖くない！LambdaでRDSプロキシを徹底的に検証してみた 〜全てがサーバレスになる〜
   - https://qiita.com/G-awa/items/b9138cc1c9e4867a905e
+- 【AWS】 LambdaでNode.jsネイティブモジュールを利用する
+  - https://qiita.com/kousaku-maron/items/057bcee356322524646b
 
 ## How to use
 
