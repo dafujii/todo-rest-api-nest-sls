@@ -437,6 +437,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 5. `local`/`test`で分けることには成功
 6. コミット
 
+### タイトルと内容持たせる予定だったのにタイトルが無いよう
+
+2020/06/13 13:30 - 14:00
+
+1. テストを先に
+   1. `todos.service.spec.ts`
+   2. `todos.controller.spec.ts`
+   3. 失敗確認
+2. テストが動くように実装
+   1. `todo.entity.ts`
+   2. `todos.service.ts`
+   3. DTO
+3. テストが通ることを確認
+4. 動作確認
+5. コミット
+
 ## 課題
 
 - [ ] どうやってRDSにつなぐ？
@@ -512,6 +528,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - `nest start`と`serverless offline`の動作で挙動が違う
   - `nest start`で起動した際は、POST時に`Content-Type: application/json`つけないと500エラー返すっぽい
 - E2Eテストは`ts-jest`で動かしているのでTypeScriptコードを参照させる
+- TypeORMのORの書き方
+  - 配列で渡す。`A AND (B OR C)` も分解させる。
 
 ## わからん
 

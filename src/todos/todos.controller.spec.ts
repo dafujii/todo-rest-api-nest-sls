@@ -15,6 +15,7 @@ describe('Todos Controller', () => {
       {
         id: 1,
         userId: 1,
+        title: 'ToDo1',
         text: '単体テスト書く',
         status: 'ToDo',
         createdAt: new Date('2020-05-06T20:00:00'),
@@ -24,6 +25,7 @@ describe('Todos Controller', () => {
       {
         id: 2,
         userId: 2,
+        title: 'ToDo2',
         text: 'コントローラの単体テスト書く',
         status: 'ToDo',
         createdAt: new Date('2020-05-06T20:40:00'),
@@ -78,6 +80,7 @@ describe('Todos Controller', () => {
     expect(result[0]).toEqual({
       id: 2,
       userId: 2,
+      title: 'ToDo2',
       text: 'コントローラの単体テスト書く',
       status: 'ToDo',
       createdAt: new Date('2020-05-06T20:40:00'),
@@ -90,12 +93,14 @@ describe('Todos Controller', () => {
     const result = await controller.create(
       { user: { userId: 1 } },
       {
+        title: '新規ToDo Title',
         text: '新規ToDo',
         status: 'WIP',
       },
     );
     expect(result.id).toBe(3);
     expect(result.userId).toBe(1);
+    expect(result.title).toBe('新規ToDo Title');
     expect(result.text).toBe('新規ToDo');
     expect(result.status).toBe('WIP');
   });
@@ -125,10 +130,12 @@ describe('Todos Controller', () => {
 
   it('id:2のToDoが更新できること', async () => {
     const result = await controller.update({ user: { userId: 2 } }, 2, {
+      title: '更新されしToDo',
       text: '更新ToDo',
       status: 'Done',
     });
     expect(result.userId).toBe(2);
+    expect(result.title).toBe('更新されしToDo');
     expect(result.text).toBe('更新ToDo');
     expect(result.status).toBe('Done');
   });
@@ -136,6 +143,7 @@ describe('Todos Controller', () => {
   it('id:20のToDo更新でNot Foundが返ってくること', async () => {
     expect(async () => {
       await controller.update(20, 1, {
+        title: '更新ToDo',
         text: '更新ToDo',
         status: 'Done',
       });
@@ -146,7 +154,11 @@ describe('Todos Controller', () => {
     jest
       .spyOn(repo, 'find')
       .mockResolvedValueOnce(
-        todos.filter(todo => todo.userId === 2 && todo.text.includes('単体')),
+        todos.filter(
+          todo =>
+            todo.userId === 2 &&
+            (todo.text.includes('単体') || todo.title.includes('単体')),
+        ),
       );
 
     const result = await controller.search({ user: { userId: 2 } }, '単体');
@@ -158,7 +170,11 @@ describe('Todos Controller', () => {
     jest
       .spyOn(repo, 'find')
       .mockResolvedValueOnce(
-        todos.filter(todo => todo.userId === 4 && todo.text.includes('テスト')),
+        todos.filter(
+          todo =>
+            todo.userId === 4 &&
+            (todo.text.includes('テスト') || todo.title.includes('テスト')),
+        ),
       );
 
     const result = await controller.search({ user: { userId: 4 } }, 'テスト');

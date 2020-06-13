@@ -22,6 +22,10 @@ export class ToDo {
   @ApiProperty()
   userId: number;
 
+  @Column({ type: 'varchar', length: 255 })
+  @ApiProperty()
+  title: string;
+
   @Column({ type: 'text' })
   @ApiProperty()
   text: string;

@@ -26,15 +26,16 @@ export class TodosService {
 
   async search(userId: number, searchText: string) {
     return this.todoRepository.find({
-      where: {
-        userId: userId,
-        text: Like(`%${searchText}%`),
-      },
+      where: [
+        { userId: userId, title: Like(`%${searchText}%`) },
+        { userId: userId, text: Like(`%${searchText}%`) },
+      ],
     });
   }
 
   async create(userId: number, createToDoDto: CreateToDoDto) {
     const todo = new ToDo();
+    todo.title = createToDoDto.title;
     todo.text = createToDoDto.text;
     todo.status = createToDoDto.status;
     todo.userId = userId;
@@ -46,6 +47,7 @@ export class TodosService {
     if (todo === undefined) {
       return undefined;
     }
+    todo.title = updateToDoDto.title;
     todo.text = updateToDoDto.text;
     todo.status = updateToDoDto.status;
     return this.todoRepository.save(todo);

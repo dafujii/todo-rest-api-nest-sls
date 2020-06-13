@@ -14,6 +14,7 @@ describe('TodosService', () => {
       {
         id: 1,
         userId: 1,
+        title: 'ToDo1',
         text: '単体テスト書く',
         status: 'WIP',
         createdAt: new Date('2020-05-06T20:00:00'),
@@ -23,6 +24,7 @@ describe('TodosService', () => {
       {
         id: 2,
         userId: 1,
+        title: 'ToDo2',
         text: 'E2Eテスト書く',
         status: 'ToDo',
         createdAt: new Date('2020-06-06T21:00:00'),
@@ -32,6 +34,7 @@ describe('TodosService', () => {
       {
         id: 3,
         userId: 1,
+        title: 'ToDo3',
         text: '納品',
         status: 'ToDo',
         createdAt: new Date('2020-06-07T20:00:00'),
@@ -94,9 +97,11 @@ describe('TodosService', () => {
 
   it('userId:1のToDoが登録できること', async () => {
     const result = await service.create(1, {
+      title: 'しんきToDo',
       text: '新規ToDo',
       status: 'ToDo',
     });
+    expect(result.title).toBe('しんきToDo');
     expect(result.text).toBe('新規ToDo');
   });
 
@@ -129,12 +134,32 @@ describe('TodosService', () => {
     jest
       .spyOn(repo, 'find')
       .mockResolvedValueOnce(
-        todos.filter(todo => todo.userId === 1 && todo.text.includes('テスト')),
+        todos.filter(
+          todo =>
+            todo.userId === 1 &&
+            (todo.text.includes('テスト') || todo.title.includes('テスト')),
+        ),
       );
 
     const result = await service.search(1, 'テスト');
     expect(result.length).toBe(2);
     expect(result[0].text).toBe('単体テスト書く');
     expect(result[1].text).toBe('E2Eテスト書く');
+  });
+
+  it('userId:1で「3」で検索し1件取得できること', async () => {
+    jest
+      .spyOn(repo, 'find')
+      .mockResolvedValueOnce(
+        todos.filter(
+          todo =>
+            todo.userId === 1 &&
+            (todo.text.includes('3') || todo.title.includes('3')),
+        ),
+      );
+
+    const result = await service.search(1, '3');
+    expect(result.length).toBe(1);
+    expect(result[0].title).toBe('ToDo3');
   });
 });
