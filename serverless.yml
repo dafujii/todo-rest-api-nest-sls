@@ -20,6 +20,7 @@ provider:
   runtime: nodejs12.x
   region: ap-northeast-1
   memorySize: 256
+  timeout: 29
   logRetentionInDays: 1
   apiGateway:
     minimumCompressionSize: 1024
