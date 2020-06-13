@@ -34,6 +34,7 @@ const dbConfigs: DBConfigs = {
     database: process.env.DB_DATABASE,
     entities: ['entities/**/*.entity.js'],
     migrations: ['migrations/**/*.js'],
+    logging: true,
     synchronize: true,
     extra: { timezone: '+09:00' },
   },
