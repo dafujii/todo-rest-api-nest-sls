@@ -17,13 +17,10 @@ async function bootstrapServer(): Promise<Server> {
   return serverless.createServer(expressApp);
 }
 
-export const handler: Handler = (event: any, context: Context) => {
+export const handler: Handler = async (event: any, context: Context) => {
   if (!cachedServer) {
-    bootstrapServer().then(async server => {
-      cachedServer = server;
-      return serverless.proxy(server, event, context, 'PROMISE').promise;
-    });
+    cachedServer = await bootstrapServer();
   }
 
-  return serverless.proxy(cachedServer, event, context, 'PROMISE').promise;
+  return serverless.proxy(cachedServer, event, context);
 };

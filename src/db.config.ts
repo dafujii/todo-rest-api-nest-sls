@@ -35,7 +35,7 @@ const dbConfigs: DBConfigs = {
     entities: ['dist/entities/**/*.entity.js'],
     migrations: ['dist/migrations/**/*.js'],
     logging: true,
-    synchronize: true,
+    synchronize: false,
     extra: { timezone: '+09:00' },
   },
 };
