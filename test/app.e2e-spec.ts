@@ -9,7 +9,7 @@ import { TodosModule } from '../src/todos/todos.module';
 import { TodosService } from '../src/todos/todos.service';
 import { UsersService } from '../src/users/users.service';
 import { AuthService } from '../src/auth/auth.service';
-import { dbConfig } from '../src/db.config';
+import * as dbConfig from '../src/db.config';
 import { JwtModule } from '@nestjs/jwt';
 
 describe('AppController (e2e)', () => {

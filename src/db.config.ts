@@ -49,4 +49,3 @@ const dbConfigs: DBConfigs = {
 const dbConfig: TypeOrmModuleOptions =
   dbConfigs[process.env.NODE_ENV || 'local'];
 module.exports = dbConfig;
-export { dbConfig };

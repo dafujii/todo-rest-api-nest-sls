@@ -552,7 +552,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### ドキュメント整備
 
-2020/06/14 20:50 - 22:00
+2020/06/14 20:50 - 22:10
 
 1. アーキテクチャ図更新
 2. `README.md`からActivityLogを分離
@@ -560,7 +560,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 4. ローカルで動かなくなってる😱
    1. `Unable to connect to the database`
    2. `npm run typeorm:local -- schema:sync`は成功した
-   3. TODO: ローカル環境直す
+   3. `module.exports`があるとダメ…
+   4. `module.exports`のみにしてみたらいけた
 
 ## 課題
 
