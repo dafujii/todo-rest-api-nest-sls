@@ -576,6 +576,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 5. `serverless remove`してからコミット、push
    1. 3306はパラメータストアのキーじゃない！🤣
    2. リトライ
+   1. devはパラメータストアのキーじゃない！😅
+   2. リトライ
 
 ## 課題
 
