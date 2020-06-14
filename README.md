@@ -574,6 +574,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    2. `buildspec.yml`
    3. ローカル環境で確認OK
 5. `serverless remove`してからコミット、push
+   1. 3306はパラメータストアのキーじゃない！🤣
+   2. リトライ
 
 ## 課題
 
