@@ -502,7 +502,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
       4. 一旦コミット
          1. CodeBuildデプロイログは成功
          2. 結局これ`invalid ELF header`（知ってた）
-         3. `serverless remove`した後にCodePipeline動かしたらこのエラーは無くなった……。S3に残ってたのが悪さして多っぽい？
+         3. `serverless remove`した後にCodePipeline動かしたらこのエラーは無くなった……。S3に残ってたのが悪さしてたっぽい？
          4. そしてDB接続エラー
 
 ### RDSに接続したい
@@ -527,26 +527,56 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 7. DBにはつなぎに行けている感はある。
    1. TODO: RDS再作成
 
+### RDS接続したいその2
+
+2020/06/14 13:00 - 16:30
+
+1. RDS再作成
+2. 踏み台用EC2作成
+3. RDS Proxy作成
+   1. Secrets Managerシークレット作成
+      1. `dafujii/rds/dev/admin`
+4. EC2からRDSエンドポイントへの疎通確認
+5. EC2からRDS Proxyエンドポイント疎通確認失敗
+   1. `ERROR 2013 (HY000): Lost connection to MySQL server at 'reading initial communication packet', system error: 2`
+   2. Secrets Managerシークレット作成時にブラウザ(LastPass)のAutoCompleteが別の値を入れていた……
+      1. その値を使ったら接続できた……
+6. RDS Proxyとシークレット削除して作り直し
+   1. RDS Proxyエンドポイントの名前解決に失敗する……
+   2. 何回か作り直してEC2から疎通確認
+7. Systems Managerパラメータストアの値更新
+8. CodePipelineで変更をリリース
+9. `Error: Handshake inactivity timeout`
+10. 直接Lambda関数を弄る
+    1. handlerで編集し使いまわさないように
+    2. Entityへのパスが失敗している模様
+    3. TypeORMのドキュメントじゃenumサポートしてると書かれているけど、`CREATE TABLE`でシンタックスエラーとなってる？
+    4. 接続情報修正してコミット
+    5. タイムアウト
+11. やっぱり`synchronize: true`は無理があるか…
+    1. TypeORM同期無効化
+    2. handlerリファクタリング
+    3. まだServer Error
+ 1. handlerリファクタリング
+    1. `serverless remove`してコミット、push
+    2. 今までHello World!でこんなに喜んだことがあっただろうか。いや無い
+
 ## 課題
 
-- [ ] どうやってRDSにつなぐ？
-  - [ ] SQLiteでもいいか！
-- [ ] デプロイ時のマイグレーションどうする？
-  - [ ] `"synchronize": true`で自動化可能だが本番でやるものか？
-- [ ] 永続化
 - [ ] テスト
+  - [x] 単体テスト
   - [x] DBモック
     - [ ] リポジトリ毎のモックを統一
   - [ ] E2Eテスト
-- [ ] レスポンス
-  - [ ] 例外処理
-  - [ ] `create()`: 201
+- [ ] 例外処理
 - [ ] バリデーション
 - [ ] API定義書を生成して公開する方法
 - [ ] CI/CD
   - [ ] GitHub Actions
-  - [ ] CodePipeline
+  - [ ] CodePipeline + CodeBuild
+    - [ ] マイグレーション
 - [ ] serverless-prune-plugin
+- [ ] 本番環境
 
 ## わかったこと
 
@@ -578,6 +608,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - Nest.jsにエンティティの生成コマンドはない
 - エンティティに `type:enum` 使える
   - ただしSQLiteは対応していない
+  - MySQLも`CREATE TABLE`でエラー出た
 - `synchronize:true` でマイグレーションを自動でしてくれる
 - `getRepositoryToken()` すごい
   - 任意の文字列を返すように定義したメソッドをDIできる
@@ -603,10 +634,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - 最初に作ったＲＤS Proxyで$30ほど課金発生していた😇 使うときに作るの大事
 - 環境依存はDockerよりCodeBuildでやるのがCD環境も整うし手っ取り早い
 - MySQLのconnect_timeoutのデフォルト値は10秒
+- 今まで新規DB作成などPHPMyAdminに頼り過ぎていた
 
 ## わからん
 
-- RDS Proxy繋がらん原因わからん
 - nest.jsわからん
   - passportわからん
     - 新規登録後にログイン状態にする方法
@@ -619,6 +650,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
     - モックの`find()`を良い感じにする方法
 - TypeORMわからん
   - マイグレーションの実運用周り
+    - CodeBuildでマイグレーションさせる方法
 - nest.js + Serverless Framework
   - `serverless-offline`
     - 毎回手動でビルドコマンド叩く必要がある？
