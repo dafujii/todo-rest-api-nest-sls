@@ -14,6 +14,7 @@
 - RDS Proxy
 - RDS for MySQL
 - Systems Manager Parameter Store
+- CodePipeline + CodeBuild
 
 ![./docs/aws_architecture.png](./docs/aws_architecture.png)
 
@@ -26,6 +27,9 @@
   - 内容
   - ステータス
 - [x] 検索
+  - [x] タイトル
+  - [x] 内容
+  - [ ] ステータス
 - [x] 登録
 - [x] 更新
 - [x] 削除
@@ -563,7 +567,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### CodeBuildでマイグレーションしてみる
 
-2020/06/14 19:25 - 20:15
+2020/06/14 19:25 - 20:40
 
 1. CodeBuildをVPCに配置
 2. CodeBuildにDB接続情報はbuildspecに記述すればパラメータストアから取得可能
@@ -581,6 +585,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    3. `Error: Cannot find module '/codebuild/output/src780868104/src/dist/db.config.js'`
       1. ビルドしてからコマンド実行する必要があった
       2. リトライ
+6. CodeBuild時のsyncでテーブルが生成されていることを確認
 
 ## 課題
 
@@ -595,7 +600,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - [ ] CI/CD
   - [ ] GitHub Actions
   - [ ] CodePipeline + CodeBuild
-    - [ ] マイグレーション
 - [ ] serverless-prune-plugin
 - [ ] 本番環境
 
@@ -674,11 +678,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
     - モックの`find()`を良い感じにする方法
 - TypeORMわからん
   - マイグレーションの実運用周り
-    - CodeBuildでマイグレーションさせる方法
-      - DB接続情報どう渡す？
+    - 失敗時の切り戻し方法
 - nest.js + Serverless Framework
   - `serverless-offline`
-    - 毎回手動でビルドコマンド叩く必要がある？
     - 初回実行時はHTTP 502返す？
 - ほぼ初めて触るフレームワークやORMでTDDやる方法
 - `Controller`から呼び出される`Service`内のメソッドは`Controller`のテストだけでOK？
