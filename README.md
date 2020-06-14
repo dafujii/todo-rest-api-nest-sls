@@ -575,9 +575,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    3. ローカル環境で確認OK
 5. `serverless remove`してからコミット、push
    1. 3306はパラメータストアのキーじゃない！🤣
-   2. リトライ
-   1. devはパラメータストアのキーじゃない！😅
-   2. リトライ
+      1. リトライ
+   2. devはパラメータストアのキーじゃない！😅
+      1. リトライ
+   3. `Error: Cannot find module '/codebuild/output/src780868104/src/dist/db.config.js'`
+      1. ビルドしてからコマンド実行する必要があった
+      2. リトライ
 
 ## 課題
 
