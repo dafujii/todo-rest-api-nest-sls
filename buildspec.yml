@@ -1,4 +1,12 @@
 version: 0.2
+env:
+  parameter-store:
+    NODE_ENV: dev
+    DB_HOST: /dafujii/todo-rest-api-nest-sls/dev/DB_HOST
+    DB_PORT: 3306
+    DB_USERNAME: /dafujii/todo-rest-api-nest-sls/dev/DB_USERNAME
+    DB_PASSWORD: /dafujii/todo-rest-api-nest-sls/dev/DB_PASSWORD
+    DB_DATABASE: /dafujii/todo-rest-api-nest-sls/dev/DB_DATABASE
 
 phases:
   install:
@@ -11,4 +19,5 @@ phases:
       - npm install
   post_build:
     commands:
+      - npm run typeorm:dev -- schema:sync
       - npm run deploy:dev

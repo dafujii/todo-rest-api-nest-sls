@@ -123,7 +123,7 @@ describe('TodosService', () => {
 
   it('id:1のToDoが更新できること', async () => {
     const result = await service.update(1, 1, {
-      title:"ToDoこうしん",
+      title: 'ToDoこうしん',
       text: 'ToDo更新',
       status: 'WIP',
     });

@@ -561,6 +561,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
     1. `serverless remove`してコミット、push
     2. 今までHello World!でこんなに喜んだことがあっただろうか。いや無い
 
+### CodeBuildでマイグレーションしてみる
+
+2020/06/14 19:25 - 20:15
+
+1. CodeBuildをVPCに配置
+2. CodeBuildにDB接続情報はbuildspecに記述すればパラメータストアから取得可能
+3. TypeORMにどうやってDB接続情報を渡す？
+   1. `module.exports = dbConfig;`
+4. マイグレーションというか同期でなんとかする
+   1. `package.json`
+   2. `buildspec.yml`
+   3. ローカル環境で確認OK
+5. `serverless remove`してからコミット、push
+
 ## 課題
 
 - [ ] テスト
@@ -635,6 +649,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - 環境依存はDockerよりCodeBuildでやるのがCD環境も整うし手っ取り早い
 - MySQLのconnect_timeoutのデフォルト値は10秒
 - 今まで新規DB作成などPHPMyAdminに頼り過ぎていた
+- CodeBuildはVPC配置できる
+- buildspecでパラメータストアから値を取得できる
+`npm run {scripts}`に引数を渡す場合は`--`を使う
 
 ## わからん
 
@@ -651,6 +668,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - TypeORMわからん
   - マイグレーションの実運用周り
     - CodeBuildでマイグレーションさせる方法
+      - DB接続情報どう渡す？
 - nest.js + Serverless Framework
   - `serverless-offline`
     - 毎回手動でビルドコマンド叩く必要がある？
@@ -667,6 +685,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - どこにどのセキュリティグループ割り当てたのかすぐ迷子になる
   - セキュリティグループの設定もどこで何やったか時間たつと忘れる
   - 今回NATゲートウェイが存在する意味わからん。外に出ないなら不要？
+- `module.exports`わからん
 
 ## 参考記事
 
@@ -691,6 +710,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - https://qiita.com/G-awa/items/b9138cc1c9e4867a905e
 - 【AWS】 LambdaでNode.jsネイティブモジュールを利用する
   - https://qiita.com/kousaku-maron/items/057bcee356322524646b
+- [CodeBuild]buildspec.ymlでの環境変数指定方法あれこれまとめ
+  - https://dev.classmethod.jp/articles/codebuild-env/
 
 ## How to use
 

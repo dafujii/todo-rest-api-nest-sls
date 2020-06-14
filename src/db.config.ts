@@ -15,6 +15,9 @@ const dbConfigs: DBConfigs = {
     logging: true,
     synchronize: true,
     extra: { timezone: '+09:00' },
+    cli: {
+      migrationsDir: 'dist/migrations',
+    },
   },
   test: {
     type: 'sqlite',
@@ -37,7 +40,13 @@ const dbConfigs: DBConfigs = {
     logging: true,
     synchronize: false,
     extra: { timezone: '+09:00' },
+    cli: {
+      migrationsDir: 'dist/migrations',
+    },
   },
 };
 
-export const dbConfig = dbConfigs[process.env.NODE_ENV || 'local'];
+const dbConfig: TypeOrmModuleOptions =
+  dbConfigs[process.env.NODE_ENV || 'local'];
+module.exports = dbConfig;
+export { dbConfig };
