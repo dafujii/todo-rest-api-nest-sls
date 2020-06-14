@@ -22,5 +22,5 @@ export const handler: Handler = async (event: any, context: Context) => {
     cachedServer = await bootstrapServer();
   }
 
-  return serverless.proxy(cachedServer, event, context);
+  return serverless.proxy(cachedServer, event, context, 'PROMISE').promise;
 };
