@@ -33,7 +33,6 @@ export class ToDo {
   @Column({
     type: 'varchar',
     length: 255,
-    enum: ['ToDo', 'WIP', 'Done'],
     default: 'ToDo',
   })
   @ApiProperty()
