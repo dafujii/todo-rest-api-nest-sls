@@ -39,37 +39,88 @@
 
 ## How to use
 
-### Installation
+### Local
+
+Using sqlite3.
+
+#### Installation
 
 ```bash
-$ npm install
+npm install
 ```
 
-### Running the app
+#### Running the app
+
+- http://localhost:3000/dev/
+- OpenAPI: http://localhost:3000/api/
 
 ```bash
-# development
-$ npm run start
+npm run start
 
-# watch mode
-$ npm run start:dev
+# watch
+npm run start:dev
 
-# production mode
-$ npm run start:prod
+# debug
+npm run start:debug
+
+# serverless-offline
+npm run build && serverless offline
 ```
 
 ### Test
 
 ```bash
 # unit tests
-$ npm run test
+npm run test
+
+# unit tests (watch)
+npm run test:watch
+
+# unit tests (debug)
+npm run test:watch
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
 # test coverage
-$ npm run test:cov
+npm run test:cov
 ```
+
+### Other
+
+```bash
+# format
+npm run format
+
+# lint
+npm run lint
+```
+
+## Dev(AWS)
+
+### Prepare
+
+#### AWS Resource
+
+- VPC
+  - Subnet
+  - Security Group
+- RDS
+  - (RDS Proxy)
+- CodePipeline
+- CodeBuild(VPC)
+
+##### Systems Manager パラメータストア
+
+以下を設定する。
+
+|Key|Comment|
+|---|---|
+|`/dafujii/todo-rest-api-nest-sls/AUTH_SECRET`|JWT用のシークレットとなる適当な文字列|
+|`/dafujii/todo-rest-api-nest-sls/dev/DB_HOST`|接続先DBホスト名|
+|`/dafujii/todo-rest-api-nest-sls/dev/DB_USERNAME`|接続先DBユーザ名|
+|`/dafujii/todo-rest-api-nest-sls/dev/DB_PASSWORD`|接続先DBパスワード|
+|`/dafujii/todo-rest-api-nest-sls/dev/DB_DATABASE`|接続先DBデータベース名|
 
 ## Activity Log
 

@@ -552,10 +552,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### ドキュメント整備
 
-2020/06/14 20:50 - 
+2020/06/14 20:50 - 22:00
 
 1. アーキテクチャ図更新
 2. `README.md`からActivityLogを分離
+3. 環境構築方法記述
+4. ローカルで動かなくなってる😱
+   1. `Unable to connect to the database`
+   2. `npm run typeorm:local -- schema:sync`は成功した
+   3. TODO: ローカル環境直す
 
 ## 課題
 
@@ -572,6 +577,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - [x] CodePipeline + CodeBuild
 - [ ] serverless-prune-plugin
 - [ ] 本番環境
+- [ ] DB文字化け😇
 
 ## わかったこと
 
