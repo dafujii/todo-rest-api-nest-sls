@@ -35,8 +35,12 @@
 - [x] 削除
 - [x] ユーザごとにToDo操作可能、認証/認可
 - [x] テストコード
-- [ ] API仕様書
+  - [x] 単体テスト
+    - [x] カバレッジ
+  - [ ] E2Eテスト
+- [x] API仕様書
   - http://localhost:3000/api/
+  - [ ] ファイル出力
 
 ## How to use
 
@@ -78,7 +82,7 @@ npm run test
 npm run test:watch
 
 # unit tests (debug)
-npm run test:watch
+npm run test:debug
 
 # e2e tests
 npm run test:e2e
@@ -110,6 +114,7 @@ npm run lint
   - (RDS Proxy)
 - CodePipeline
 - CodeBuild(VPC)
+- S3
 
 ##### Systems Manager パラメータストア
 
@@ -122,6 +127,10 @@ npm run lint
 |`/dafujii/todo-rest-api-nest-sls/dev/DB_USERNAME`|接続先DBユーザ名|
 |`/dafujii/todo-rest-api-nest-sls/dev/DB_PASSWORD`|接続先DBパスワード|
 |`/dafujii/todo-rest-api-nest-sls/dev/DB_DATABASE`|接続先DBデータベース名|
+
+#### Edit serverless.yml
+
+`vpc`や`deploymentBucket`の項目を自身が用意したリソースに置き換える。
 
 ## Activity Log
 

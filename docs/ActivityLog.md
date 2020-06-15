@@ -571,6 +571,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    1. 例外テスト時の無名関数を実行させる必要があった
    2. テストパターンも間違ってた🙄
 
+### ドキュメント加筆修正
+
+2020/06/15 20:25 - 21:00
+
+1. README.md
+2. AWSコンソールの認証情報をLastPassから削除していたことが判明しログインできないオワタ
+   1. ルートユーザでIAMのパスワード初期化
+
 ## 課題
 
 - [ ] テスト
@@ -603,7 +611,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - 以前書いた自分のnote見れば問題が解決できる状況はありがたい。よくやった。
 - nest.js + Serverless Frameworkでも `serverless-offline` 動いてくれる
   - ローカルでもSSMから値を取って来てくれる
-  - ただし自動 `dist/` に出力したものを動かすため主導でビルドする必要がある
+  - ただし自動 `dist/` に出力したものを動かすため手動でビルドする必要がある
   - ブレイクポイント打てるのはcontrollerのみ？
 - VSCodeのTest UI Explorerすごい。watchもしてくれる
 - IntelliSenseによる自動importでは`./src/`から始まるが、そうするとインポートできない模様
@@ -627,7 +635,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - bcryptというハッシュ化関数がある
   - ネイティブモジュールのため、WindowsのローカルからLambdaへデプロイすると動かない
 - `@CreateDateColumn()`/`@UpdateDateColumn()`は`NOT NULL` になる
-- いくら単体テストかいてもE2Eテストしたらテスト範囲外の部分でエラーが出る……
 - 例外テスト書くときはラップする
 - 非同期の例外テスト書くときは`rejects`をはさむ
 - Jestで一致しないときは`not()`を使う
@@ -659,6 +666,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
     - https://docs.nestjs.com/recipes/documentation
     - https://docs.nestjs.com/recipes/swagger
       - もっとスマートにできないものか
+      - 静的ファイルとして出力して公開する方法
   - モックの共通化
     - モックの`find()`を良い感じにする方法
 - TypeORMわからん
