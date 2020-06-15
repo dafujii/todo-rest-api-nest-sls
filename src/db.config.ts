@@ -14,7 +14,10 @@ const dbConfigs: DBConfigs = {
     migrations: ['dist/migrations/**/*.js'],
     logging: true,
     synchronize: true,
-    extra: { timezone: '+09:00' },
+    extra: {
+      timezone: '+09:00',
+      charset: 'utf8mb4_bin',
+    },
     cli: {
       migrationsDir: 'dist/migrations',
     },
@@ -26,7 +29,10 @@ const dbConfigs: DBConfigs = {
     migrations: ['src/migrations/**/*.ts'],
     logging: true,
     synchronize: true,
-    extra: { timezone: '+09:00' },
+    extra: {
+      timezone: '+09:00',
+      charset: 'utf8mb4_bin',
+    },
   },
   dev: {
     type: 'mysql',
@@ -39,7 +45,10 @@ const dbConfigs: DBConfigs = {
     migrations: ['dist/migrations/**/*.js'],
     logging: true,
     synchronize: false,
-    extra: { timezone: '+09:00' },
+    extra: {
+      timezone: '+09:00',
+      charset: 'utf8mb4_bin',
+    },
     cli: {
       migrationsDir: 'dist/migrations',
     },
