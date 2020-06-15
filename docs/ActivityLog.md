@@ -579,6 +579,34 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 2. AWSコンソールの認証情報をLastPassから削除していたことが判明しログインできないオワタ
    1. ルートユーザでIAMのパスワード初期化
 
+### MySQLで生成されたテーブルのcharsetがlatin1問題を解決したい
+
+2020/06/15 22:45 - 00:00
+
+1. TypeORMの接続情報に`charset`で指定すればテーブルもそれで作られる？
+   1. dev環境でDROP TABLE！
+   2. `db.config.ts`
+   3. commit&push
+   4. `charset=latin1`のままになっていることを確認
+   5. 試しに`{title:"🍣"}`を登録して取得すると`?`となっていることも確認
+   6. `drop table`と`serverless remove`後に変更をリリースしてみる
+      1. 変わらず
+      2. `select * from INFORMATION_SCHEMA.SCHEMATA where SCHEMA_NAME='dafujii'`
+         1. `DEFAULT_CHARACTER_SET_NAME:latin1`, `DEFAULT_COLLATION_NAME:latin1_swedish_ci`
+      3. `db.config.ts`の`charset`を`utf8mb4`に変更して様子見
+      4. ダメ
+2. 素直に新規データベース作る
+   1. `CREATE DATABASE dafujii-todo character set utf8mb4 collate utf8mb4_bin;`
+   2. パラメータストアの`/dafujii/todo-rest-api-nest-sls/dev/DB_DATABASE`変更
+   3. `serverless remove`&変更リリース
+   4. Internal server error🤮
+   5. `Lambda was unable to decrypt the environment variables because KMS access was denied. Please check the function's KMS key settings. KMS Exception: UnrecognizedClientExceptionKMS Message: The security token included in the request is invalid.`
+   6. 少し待ったら動いた🤘🤘🤘
+   7. `utf8mb4`を確認
+   8. 🍣や🍺も登録可能
+      1. ただし検索が大文字小文字など厳密になった
+3. commit&push&🛌
+
 ## 課題
 
 - [ ] テスト
@@ -594,7 +622,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - [x] CodePipeline + CodeBuild
 - [ ] serverless-prune-plugin
 - [ ] 本番環境
-- [ ] DB文字化け😇
+- [ ] 独自ドメイン
 
 ## わかったこと
 
@@ -654,7 +682,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 - 今まで新規DB作成などPHPMyAdminに頼り過ぎていた
 - CodeBuildはVPC配置できる
 - buildspecでパラメータストアから値を取得できる
-`npm run {scripts}`に引数を渡す場合は`--`を使う
+- `npm run {scripts}`に引数を渡す場合は`--`を使う
+- RDS作成時の初期データベースを使うのではなく、ちゃんと専用作るべきだよね😝
+  - 初期データベースは`latin1`
+- TypeORMのマイグレーションで発行する`CREATE TABLE`には`CHARSET`/`COLLATE`の指定がないのでデータベースから引き継ぐ
+- Docker使ってローカル環境でもMySQL使った方がデプロイしなければ分からない事が減らせる
+- この構成ならLambdaでもECSでもFargateでもEC2でも動かせる！
+  - とはいえLambdaでやることか？感がﾁｮｯﾄある
 
 ## わからん
 
@@ -689,6 +723,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - 今回NATゲートウェイが存在する意味わからん。外に出ないなら不要？
 - `module.exports`わからん
   - TypeScriptからトランスコンパイルした後に`module.exports = dbConfig;`となる書き方がわからん
+- DB接続時にcharset指定してRDS Proxy経由で接続すると、charset変更してつないでもコネクション使いまわされたりするの？
 
 ## 参考記事
 

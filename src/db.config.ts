@@ -16,7 +16,7 @@ const dbConfigs: DBConfigs = {
     synchronize: true,
     extra: {
       timezone: '+09:00',
-      charset: 'utf8mb4_bin',
+      charset: 'utf8mb4',
     },
     cli: {
       migrationsDir: 'dist/migrations',
@@ -31,7 +31,7 @@ const dbConfigs: DBConfigs = {
     synchronize: true,
     extra: {
       timezone: '+09:00',
-      charset: 'utf8mb4_bin',
+      charset: 'utf8mb4',
     },
   },
   dev: {
@@ -47,7 +47,7 @@ const dbConfigs: DBConfigs = {
     synchronize: false,
     extra: {
       timezone: '+09:00',
-      charset: 'utf8mb4_bin',
+      charset: 'utf8mb4',
     },
     cli: {
       migrationsDir: 'dist/migrations',
