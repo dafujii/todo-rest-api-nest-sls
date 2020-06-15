@@ -110,10 +110,12 @@ describe('Todos Controller', () => {
     expect(result).toBeUndefined();
   });
 
-  it('id:10のToDoを試みてNotFound例外が発生すること', async () => {
-    expect(async () => {
-      await controller.delete({ user: { userId: 1 } }, 10);
-    }).rejects.toThrow(/Not Found/);
+  it('id:10のToDo削除を試みてNotFound例外が発生すること', async () => {
+    expect(
+      (async () => {
+        await controller.delete({ user: { userId: 1 } }, 10);
+      })(),
+    ).rejects.toThrow(/Not Found/);
   });
 
   it('id:1のToDoが取得できること', async () => {
@@ -123,9 +125,11 @@ describe('Todos Controller', () => {
   });
 
   it('id:10のToDoが取得できないこと', async () => {
-    expect(async () => {
-      await controller.findById({ user: { userId: 10 } }, 1);
-    }).rejects.toThrow(/Not Found/);
+    expect(
+      (async () => {
+        await controller.findById({ user: { userId: 1 } }, 10);
+      })(),
+    ).rejects.toThrow(/Not Found/);
   });
 
   it('id:2のToDoが更新できること', async () => {
@@ -141,13 +145,15 @@ describe('Todos Controller', () => {
   });
 
   it('id:20のToDo更新でNot Foundが返ってくること', async () => {
-    expect(async () => {
-      await controller.update({ user: { userId: 20 } }, 1, {
-        title: '更新ToDo',
-        text: '更新ToDo',
-        status: 'Done',
-      });
-    }).rejects.toThrow(/Not Found/);
+    expect(
+      (async () => {
+        await controller.update({ user: { userId: 2 } }, 20, {
+          title: '更新ToDo',
+          text: '更新ToDo',
+          status: 'Done',
+        });
+      })(),
+    ).rejects.toThrow(/Not Found/);
   });
 
   it('userId:2で「単体」を検索し1件取得できること', async () => {

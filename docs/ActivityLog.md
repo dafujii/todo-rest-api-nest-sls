@@ -563,6 +563,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    3. `module.exports`があるとダメ…
    4. `module.exports`のみにしてみたらいけた
 
+### 例外の単体テスト失敗してるの気づいてたよ
+
+2020/06/15 20:00 - 20:15
+
+1. `todos.controller.spec.ts`
+   1. 例外テスト時の無名関数を実行させる必要があった
+   2. テストパターンも間違ってた🙄
+
 ## 課題
 
 - [ ] テスト
@@ -672,6 +680,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
   - セキュリティグループの設定もどこで何やったか時間たつと忘れる
   - 今回NATゲートウェイが存在する意味わからん。外に出ないなら不要？
 - `module.exports`わからん
+  - TypeScriptからトランスコンパイルした後に`module.exports = dbConfig;`となる書き方がわからん
 
 ## 参考記事
 

@@ -36,6 +36,7 @@
 - [x] ユーザごとにToDo操作可能、認証/認可
 - [x] テストコード
 - [ ] API仕様書
+  - http://localhost:3000/api/
 
 ## How to use
 
