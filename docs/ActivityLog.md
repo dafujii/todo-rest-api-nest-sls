@@ -18,7 +18,7 @@
 
 ### リソース 作成
 
-2020/05/25 19:50-21:00
+2020/05/25 19:50 - 21:00
 
 1. AWS コンソールログイン
 2. EIP 作成
@@ -57,7 +57,7 @@
 
 ### 疎通確認
 
-2020/05/25 21:00-21:30
+2020/05/25 21:00 - 21:30
 
 1. `npm i -S @nestjs/typeorm typeorm mysql`
 2. `app.module.ts` に`TypeOrmModule.forRoot` 記述（RDS Proxy使わず）
@@ -111,7 +111,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
 
 ### 現状をpushするための準備
 
-2020/05/27 19:30-21:00
+2020/05/27 19:30 - 21:00
 
 1. `README.md` 編集
 2. draw.ioでアーキテクチャ構成図（理想）作成
@@ -606,6 +606,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsIaaacaaaaaaaaaaa.eyJ1c2VybmFtZSI6Imxxx
    8. 🍣や🍺も登録可能
       1. ただし検索が大文字小文字など厳密になった
 3. commit&push&🛌
+
+### DTOをサーバクライアント間のみにする
+
+2020/06/22 21:00 - 21:10
+
+1. Serviceのテスト修正
+   1. `create-todo.interface.ts`
+   2. `update-todo.interface.ts`
+2. Service修正
+3. commit
 
 ## 課題
 
