@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ToDo } from '../entities/todo.entity';
 import { Repository, Like } from 'typeorm';
-import { CreateToDoDto } from './dto/create-todo.dto';
-import { UpdateToDoDto } from './dto/update-todo.dto';
+import { ICreateTodo } from './interface/create-todo.interface';
+import { IUpdateTodo } from './interface/update-todo.interface';
 
 @Injectable()
 export class TodosService {
@@ -33,23 +33,23 @@ export class TodosService {
     });
   }
 
-  async create(userId: number, createToDoDto: CreateToDoDto) {
+  async create(userId: number, createTodo: ICreateTodo) {
     const todo = new ToDo();
-    todo.title = createToDoDto.title;
-    todo.text = createToDoDto.text;
-    todo.status = createToDoDto.status;
+    todo.title = createTodo.title;
+    todo.text = createTodo.text;
+    todo.status = createTodo.status;
     todo.userId = userId;
     return this.todoRepository.save(todo);
   }
 
-  async update(id: number, userId: number, updateToDoDto: UpdateToDoDto) {
+  async update(id: number, userId: number, updateTodo: IUpdateTodo) {
     const todo = await this.findById(id, userId);
     if (todo === undefined) {
       return undefined;
     }
-    todo.title = updateToDoDto.title;
-    todo.text = updateToDoDto.text;
-    todo.status = updateToDoDto.status;
+    todo.title = updateTodo.title;
+    todo.text = updateTodo.text;
+    todo.status = updateTodo.status;
     return this.todoRepository.save(todo);
   }
 
