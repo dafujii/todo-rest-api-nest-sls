@@ -34,7 +34,7 @@ export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('list')
+  @Get('/')
   @ApiHeader({ name: 'Authorization', description: 'Bearer {JWT}' })
   @ApiOkResponse({ type: ToDo, description: 'ToDo一覧', isArray: true })
   @ApiUnauthorizedResponse({
